@@ -1,5 +1,12 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.13.0
+
+- **CRITICAL FIX: Corrected nginx Configuration Syntax**: Fixed a fatal syntax error in `nginx.conf` that was causing the nginx service to crash and restart in a loop.
+- **Resolved Permission Errors**: Addressed the `Permission denied` errors for the nginx log file by ensuring all logs are correctly redirected to `/dev/stdout`.
+- **Stable Service Startup**: The nginx service now starts reliably without syntax or permission issues.
+- **Restored Ingress Functionality**: With nginx running correctly, the `sub_filter` rules for rewriting HTML are now active, which should resolve all asset loading issues.
+
 ## 1.12.0
 
 - **CRITICAL FIX: Reinstated `sub_filter` for HTML Rewriting**: Re-added the essential `sub_filter` directive to the nginx configuration to dynamically rewrite asset URLs in the HTML response.
