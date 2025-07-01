@@ -1,11 +1,5 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
-## 1.23.0
-
-- **Whitespace-Aware Path Rewriting**: Implemented highly specific `sub_filter` rules that account for newlines and exact indentation within the XML feeds.
-- **Robust XML Parsing**: This ensures that `href` attributes are correctly rewritten even when they are formatted with leading whitespace or across multiple lines.
-- **Definitive Ingress Fix**: This change provides a definitive fix for all known pathing issues related to XML feed parsing, ensuring complete ingress compatibility.
-
 ## 1.22.0
 
 - **Simplified Nginx Configuration**: Removed complex and problematic `sub_filter` rules that were causing parsing errors.
