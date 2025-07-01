@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.16.0
+
+- **Fix for RSS Feeds**: Added `application/xml` and `application/atom+xml` to the `sub_filter_types` in the nginx configuration.
+- **Ensures Correct Rewriting**: This change ensures that URLs within XML-based feeds (like RSS/Atom) are correctly rewritten to work with Home Assistant's ingress.
+- **Improved Content Compatibility**: Resolves issues where RSS feeds were not loading or working correctly within the Kiwix add-on.
+
 ## 1.15.0
 
 - **THE DEFINITIVE FIX: Corrected Root Path Injection**: Identified and fixed the root cause of all remaining API call failures by correctly rewriting the empty `href` in the root link tag.
