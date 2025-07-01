@@ -114,6 +114,12 @@ The sidebar entry uses a book icon (📖) and is accessible to all users (not ju
 - Check if another service is using the same port
 - Review add-on logs for error messages
 
+**Interface looks broken in sidebar?**
+- This usually indicates CSS/JS loading issues in ingress mode
+- Check the add-on logs for "URL root location" messages
+- Try restarting the add-on
+- If issues persist, try accessing via direct URL first, then sidebar
+
 **Add-on won't start?**
 - Check configuration syntax
 - Ensure library path exists and is accessible

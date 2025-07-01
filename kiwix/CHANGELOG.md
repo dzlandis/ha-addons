@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.2.0
+
+- **Fixed ingress compatibility**: Resolved CSS/JS loading issues when accessing via Home Assistant sidebar
+- Added URL root location configuration for proper asset loading in ingress mode
+- Enhanced debugging for ingress-related issues
+
 ## 1.1.0
 
 - **Added sidebar integration**: Kiwix now appears in the Home Assistant sidebar for easy access
