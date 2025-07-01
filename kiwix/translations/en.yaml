@@ -1,0 +1,25 @@
+configuration:
+  log_level:
+    name: Log Level
+    description: Set the level of logging output.
+  library_path:
+    name: Library Path
+    description: Path where ZIM files are stored.
+  port:
+    name: Port
+    description: Port number for the Kiwix web server.
+  threads:
+    name: Threads
+    description: Number of threads to run in parallel (1-16).
+  search_limit:
+    name: Search Limit
+    description: Maximum number of ZIM files in a fulltext multi-ZIM search (0 = no limit).
+  block_external_links:
+    name: Block External Links
+    description: Prevent users from directly navigating to external resources via links in ZIM content.
+  no_search_bar:
+    name: Hide Search Bar
+    description: Hide the search box in the ZIM viewer toolbar.
+  no_library_button:
+    name: Hide Library Button
+    description: Hide the library home button in the ZIM viewer toolbar.

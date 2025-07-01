@@ -1,0 +1,145 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Start the Kiwix service
+# s6-overlay docs: https://github.com/just-containers/s6-overlay
+# ==============================================================================
+
+# Declare variables
+declare library_path
+declare port
+declare log_level
+declare threads
+declare search_limit
+declare block_external_links
+declare no_search_bar
+declare no_library_button
+
+# Get configuration options
+library_path=$(bashio::config 'library_path')
+port=$(bashio::config 'port')
+log_level=$(bashio::config 'log_level')
+threads=$(bashio::config 'threads')
+search_limit=$(bashio::config 'search_limit')
+block_external_links=$(bashio::config 'block_external_links')
+no_search_bar=$(bashio::config 'no_search_bar')
+no_library_button=$(bashio::config 'no_library_button')
+
+# Set defaults
+library_path=${library_path:-"/share/kiwix"}
+port=${port:-8080}
+log_level=${log_level:-"info"}
+threads=${threads:-4}
+search_limit=${search_limit:-0}
+block_external_links=${block_external_links:-false}
+no_search_bar=${no_search_bar:-false}
+no_library_button=${no_library_button:-false}
+
+# Create library directory if it doesn't exist
+if [ ! -d "${library_path}" ]; then
+    bashio::log.info "Creating library directory: ${library_path}"
+    mkdir -p "${library_path}"
+fi
+
+# Create a simple index.html if no ZIM files are found
+if [ ! "$(ls -A ${library_path}/*.zim 2>/dev/null)" ]; then
+    bashio::log.warning "No ZIM files found in ${library_path}"
+    bashio::log.info "You can add ZIM files to the library path to start serving content"
+    bashio::log.info "Download ZIM files from https://library.kiwix.org/"
+    
+    # Create a welcome page
+    cat > /tmp/welcome.html << 'EOF'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kiwix - Home Assistant Add-on</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .warning { background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 5px; }
+        .info { background: #d4edda; border: 1px solid #c3e6cb; padding: 15px; border-radius: 5px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Kiwix Home Assistant Add-on</h1>
+        <div class="warning">
+            <strong>No content available!</strong><br>
+            No ZIM files were found in your library directory.
+        </div>
+        <div class="info">
+            <h3>How to add content:</h3>
+            <ol>
+                <li>Download ZIM files from <a href="https://library.kiwix.org/" target="_blank">library.kiwix.org</a></li>
+                <li>Copy the ZIM files to your configured library path: <code>${library_path}</code></li>
+                <li>Restart this add-on</li>
+                <li>Your content will be available here!</li>
+            </ol>
+            <p><strong>Popular ZIM files:</strong></p>
+            <ul>
+                <li>Wikipedia (various languages)</li>
+                <li>Wiktionary</li>
+                <li>TED Talks</li>
+                <li>Project Gutenberg</li>
+                <li>Stack Overflow</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+EOF
+    
+    # Start a simple HTTP server for the welcome page
+    bashio::log.info "Starting welcome server on port ${port}"
+    cd /tmp
+    exec python3 -m http.server ${port}
+else
+    # Start Kiwix server with ZIM files
+    bashio::log.info "Starting Kiwix server on port ${port}"
+    bashio::log.info "Library path: ${library_path}"
+    bashio::log.info "Log level: ${log_level}"
+    bashio::log.info "Threads: ${threads}"
+    bashio::log.info "Search limit: ${search_limit}"
+    
+    # Build array of ZIM files
+    zim_files=()
+    for zim_file in "${library_path}"/*.zim; do
+        if [ -f "$zim_file" ]; then
+            bashio::log.info "Adding ZIM file: $(basename "$zim_file")"
+            zim_files+=("$zim_file")
+        fi
+    done
+    
+    # Check if we have any ZIM files
+    if [ ${#zim_files[@]} -eq 0 ]; then
+        bashio::log.error "No valid ZIM files found in ${library_path}"
+        exit 1
+    fi
+    
+    # Build command arguments
+    args=(
+        "--port=${port}"
+        "--address=0.0.0.0"
+        "--threads=${threads}"
+    )
+    
+    # Add optional arguments
+    if [ "${search_limit}" -gt 0 ]; then
+        args+=("--searchLimit=${search_limit}")
+    fi
+    
+    if [ "${block_external_links}" = "true" ]; then
+        args+=("--blockexternal")
+    fi
+    
+    if [ "${no_search_bar}" = "true" ]; then
+        args+=("--nosearchbar")
+    fi
+    
+    if [ "${no_library_button}" = "true" ]; then
+        args+=("--nolibrarybutton")
+    fi
+    
+    # Execute kiwix-serve with all ZIM files
+    bashio::log.info "Starting Kiwix server with ${#zim_files[@]} ZIM file(s)"
+    exec /usr/local/bin/kiwix-serve "${args[@]}" "${zim_files[@]}"
+fi

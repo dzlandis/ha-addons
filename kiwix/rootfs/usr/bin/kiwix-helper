@@ -1,0 +1,167 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Kiwix ZIM Management Helper
+# ==============================================================================
+
+# Function to display usage
+show_usage() {
+    echo "Kiwix ZIM Management Helper"
+    echo ""
+    echo "Usage: kiwix-helper [command] [options]"
+    echo ""
+    echo "Commands:"
+    echo "  list              List all ZIM files in the library"
+    echo "  info <file>       Show information about a ZIM file"
+    echo "  size              Show total size of all ZIM files"
+    echo "  check             Check for broken or invalid ZIM files"
+    echo "  help              Show this help message"
+    echo ""
+}
+
+# Function to list ZIM files
+list_zim_files() {
+    local library_path=$(bashio::config 'library_path' '/share/kiwix')
+    
+    echo "ZIM files in ${library_path}:"
+    echo ""
+    
+    local count=0
+    for zim_file in "${library_path}"/*.zim; do
+        if [ -f "$zim_file" ]; then
+            local size=$(du -h "$zim_file" | cut -f1)
+            local name=$(basename "$zim_file")
+            echo "  ${name} (${size})"
+            ((count++))
+        fi
+    done
+    
+    if [ $count -eq 0 ]; then
+        echo "  No ZIM files found."
+        echo ""
+        echo "To add ZIM files:"
+        echo "  1. Download from https://library.kiwix.org/"
+        echo "  2. Copy to ${library_path}/"
+        echo "  3. Restart the Kiwix add-on"
+    else
+        echo ""
+        echo "Total: ${count} ZIM file(s)"
+    fi
+}
+
+# Function to show ZIM file info
+show_zim_info() {
+    local file="$1"
+    local library_path=$(bashio::config 'library_path' '/share/kiwix')
+    
+    if [ -z "$file" ]; then
+        echo "Error: Please specify a ZIM file name"
+        return 1
+    fi
+    
+    local full_path="${library_path}/${file}"
+    if [ ! -f "$full_path" ]; then
+        echo "Error: ZIM file '${file}' not found in ${library_path}"
+        return 1
+    fi
+    
+    echo "ZIM File Information:"
+    echo "  File: ${file}"
+    echo "  Path: ${full_path}"
+    echo "  Size: $(du -h "$full_path" | cut -f1)"
+    echo "  Modified: $(date -r "$full_path" '+%Y-%m-%d %H:%M:%S')"
+    
+    # Try to get more info if kiwix-manage is available
+    if command -v kiwix-manage >/dev/null 2>&1; then
+        echo ""
+        echo "Content Information:"
+        # This would require libkiwix, which might not be available in our minimal setup
+        echo "  (Detailed content info requires full kiwix-tools installation)"
+    fi
+}
+
+# Function to show total size
+show_total_size() {
+    local library_path=$(bashio::config 'library_path' '/share/kiwix')
+    
+    local total_size=$(du -sh "${library_path}"/*.zim 2>/dev/null | awk '{sum+=$1} END {print sum}' || echo "0")
+    local total_bytes=$(du -sb "${library_path}"/*.zim 2>/dev/null | awk '{sum+=$1} END {print sum}' || echo "0")
+    
+    echo "Total ZIM library size:"
+    if [ "$total_bytes" -gt 0 ]; then
+        echo "  $(du -sh "${library_path}"/*.zim 2>/dev/null | awk '{sum+=$1} END {print sum "B"}' | numfmt --to=iec)"
+    else
+        echo "  0 B (no ZIM files found)"
+    fi
+}
+
+# Function to check ZIM files
+check_zim_files() {
+    local library_path=$(bashio::config 'library_path' '/share/kiwix')
+    
+    echo "Checking ZIM files in ${library_path}..."
+    echo ""
+    
+    local valid_count=0
+    local invalid_count=0
+    
+    for zim_file in "${library_path}"/*.zim; do
+        if [ -f "$zim_file" ]; then
+            local name=$(basename "$zim_file")
+            
+            # Basic file checks
+            if [ -r "$zim_file" ]; then
+                # Check if file is not empty
+                if [ -s "$zim_file" ]; then
+                    # Check if file has ZIM magic bytes (basic validation)
+                    if head -c 4 "$zim_file" | grep -q "ZIM" 2>/dev/null; then
+                        echo "  ✓ ${name} - OK"
+                        ((valid_count++))
+                    else
+                        echo "  ✗ ${name} - Invalid ZIM format"
+                        ((invalid_count++))
+                    fi
+                else
+                    echo "  ✗ ${name} - Empty file"
+                    ((invalid_count++))
+                fi
+            else
+                echo "  ✗ ${name} - Not readable"
+                ((invalid_count++))
+            fi
+        fi
+    done
+    
+    echo ""
+    echo "Summary: ${valid_count} valid, ${invalid_count} invalid"
+    
+    if [ $invalid_count -gt 0 ]; then
+        echo ""
+        echo "Invalid files should be removed or re-downloaded."
+        return 1
+    fi
+}
+
+# Main script logic
+case "${1:-help}" in
+    "list")
+        list_zim_files
+        ;;
+    "info")
+        show_zim_info "$2"
+        ;;
+    "size")
+        show_total_size
+        ;;
+    "check")
+        check_zim_files
+        ;;
+    "help"|"--help"|"-h")
+        show_usage
+        ;;
+    *)
+        echo "Unknown command: $1"
+        echo ""
+        show_usage
+        exit 1
+        ;;
+esac

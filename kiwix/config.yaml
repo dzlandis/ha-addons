@@ -1,0 +1,41 @@
+# https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
+name: Kiwix
+version: "1.0.0"
+slug: kiwix
+description: Offline content reader for Wikipedia and other content via ZIM files
+url: "https://github.com/kiwix/kiwix-tools"
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+init: false
+ports:
+  8080/tcp: 8080
+ports_description:
+  8080/tcp: Kiwix web interface
+map:
+  - share:rw
+  - media:rw
+  - addons:r
+options:
+  log_level: "info"
+  library_path: "/share/kiwix"
+  port: 8080
+  threads: 4
+  search_limit: 0
+  block_external_links: false
+  no_search_bar: false
+  no_library_button: false
+schema:
+  log_level: "list(trace|debug|info|notice|warning|error|fatal)?"
+  library_path: "str?"
+  port: "port?"
+  threads: "int(1,16)?"
+  search_limit: "int(0,100)?"
+  block_external_links: "bool?"
+  no_search_bar: "bool?"
+  no_library_button: "bool?"
+startup: application
+boot: auto
