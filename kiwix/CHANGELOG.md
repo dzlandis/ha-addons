@@ -1,5 +1,12 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.5.1
+
+- **Added ingress path detection and logging**: Automatically detects Home Assistant ingress path from addon environment
+- **Improved debugging**: Logs full ingress URL and extracted path for troubleshooting
+- **Dynamic URL root location**: Configures kiwix-serve with proper `--urlRootLocation` based on detected ingress path
+- **Better error diagnosis**: Will help identify if ingress path extraction is working correctly
+
 ## 1.5.0
 
 - **MAJOR APPROACH CHANGE: Configure kiwix-serve for ingress**: Added `--urlRootLocation` parameter to kiwix-serve itself

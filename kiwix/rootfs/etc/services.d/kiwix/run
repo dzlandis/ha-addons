@@ -113,13 +113,34 @@ else
         exit 1
     fi
     
-    # Build command arguments - configure kiwix for ingress path
+    # Detect ingress path for proper URL generation
+    ingress_path=""
+    if bashio::var.has_value "$(bashio::addon.ingress_entry)"; then
+        ingress_url=$(bashio::addon.ingress_entry)
+        bashio::log.info "Full ingress URL detected: ${ingress_url}"
+        
+        # Extract just the path part from the full URL
+        # Example: https://homeassistant.local:8123/api/hassio_ingress/xyz/abc -> /api/hassio_ingress/xyz/abc
+        ingress_path=$(echo "${ingress_url}" | sed 's|^https\?://[^/]*||')
+        bashio::log.info "Extracted ingress path: ${ingress_path}"
+    else
+        bashio::log.info "No ingress URL detected - running in direct access mode"
+    fi
+    
+    # Build command arguments
     args=(
         "--port=${port}"
         "--address=0.0.0.0"
         "--threads=${threads}"
-        "--urlRootLocation=$(bashio::addon.ingress_entry)"
     )
+    
+    # Add URL root location if we have an ingress path
+    if [ -n "${ingress_path}" ]; then
+        args+=("--urlRootLocation=${ingress_path}")
+        bashio::log.info "Added --urlRootLocation=${ingress_path} to Kiwix arguments"
+    fi
+    
+    bashio::log.info "Kiwix args: ${args[*]}"
     
     # Add optional arguments
     if [ "${search_limit}" -gt 0 ]; then
