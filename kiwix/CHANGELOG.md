@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.23.0
+
+- **Experimental Build Process**: Switched to a pre-built third-party Docker image (`rnaresh/nginx-custom-modules`) to simplify the `Dockerfile`.
+- **Removes Multi-Stage Build**: This eliminates the need to compile a custom version of nginx from source.
+- **Warning**: This approach is experimental and likely breaks multi-architecture support, as the pre-built image is probably `amd64`-only. The previous multi-stage build remains the recommended approach for full compatibility.
+
 ## 1.22.0
 
 - **Optimized Build Process**: Refactored the Dockerfile to use a multi-stage build.
