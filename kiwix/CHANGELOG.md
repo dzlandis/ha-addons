@@ -1,5 +1,12 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.6.2
+
+- **Enhanced ingress path debugging**: Added comprehensive logging to diagnose "INVALID URL" errors
+- **Improved path handling**: Better detection of whether ingress_entry returns full URL or just path
+- **Path cleaning**: Remove whitespace and newlines that might corrupt the ingress path
+- **Detailed logging**: Shows original vs cleaned path lengths and final kiwix-serve command
+
 ## 1.6.1
 
 - **COMPLETE NGINX REMOVAL**: Fixed Dockerfile build errors by completely removing all nginx references
