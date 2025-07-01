@@ -1,5 +1,12 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.3.3
+
+- **Fixed nginx directory creation issues**: Create all required nginx temp directories at build time and runtime
+- **Fixed nginx error log path**: Ensure nginx can write to its expected log locations
+- **Enhanced directory structure**: Pre-create complete directory structure nginx expects
+- **Improved reliability**: Both build-time and runtime directory creation for maximum compatibility
+
 ## 1.3.2
 
 - **Fixed nginx user permission issue**: Added explicit `user root;` directive to nginx configuration

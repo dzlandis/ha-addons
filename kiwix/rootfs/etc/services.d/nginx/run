@@ -6,7 +6,12 @@
 # ==============================================================================
 
 # Create all directories nginx might need
-mkdir -p /var/lib/nginx \
+mkdir -p /var/lib/nginx/tmp/client_body \
+         /var/lib/nginx/tmp/proxy \
+         /var/lib/nginx/tmp/fastcgi \
+         /var/lib/nginx/tmp/uwsgi \
+         /var/lib/nginx/tmp/scgi \
+         /var/lib/nginx/logs \
          /var/log/nginx \
          /run/nginx \
          /tmp
