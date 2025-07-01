@@ -1,5 +1,10 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.25.0
+
+- **Ingress Compatibility for Relative Paths**: Enhanced handling of relative paths in CSS and JavaScript files when served through Home Assistant ingress.
+- **Improved Asset Loading**: This change ensures that all assets, regardless of their path format, are correctly loaded in the Home Assistant environment.
+
 ## 1.24.0
 
 - **Universal Content-Type Filtering**: Changed `sub_filter_types` to `*` to ensure path rewriting applies to all responses, regardless of `Content-Type` parameters like `charset` or `profile`.
