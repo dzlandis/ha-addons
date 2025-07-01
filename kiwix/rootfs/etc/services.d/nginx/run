@@ -5,13 +5,11 @@
 # Runs nginx for ingress support
 # ==============================================================================
 
-# Create nginx temp directories if they don't exist
-mkdir -p /var/lib/nginx/tmp/client_body \
-         /var/lib/nginx/tmp/proxy \
-         /var/lib/nginx/tmp/fastcgi \
-         /var/lib/nginx/tmp/uwsgi \
-         /var/lib/nginx/tmp/scgi \
-         /run/nginx
+# Create all directories nginx might need
+mkdir -p /var/lib/nginx \
+         /var/log/nginx \
+         /run/nginx \
+         /tmp
 
 # Replace ingress entry placeholder
 sed -i "s|%%ingress_entry%%|$(bashio::addon.ingress_entry)|g" /etc/nginx/nginx.conf
@@ -24,11 +22,5 @@ done
 
 bashio::log.info "Starting nginx for ingress support..."
 
-# Test nginx configuration
-if ! nginx -t; then
-    bashio::log.error "nginx configuration test failed!"
-    exit 1
-fi
-
-# Start nginx
+# Start nginx directly (let it handle temp directories)
 exec nginx

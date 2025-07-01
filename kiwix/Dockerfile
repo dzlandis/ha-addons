@@ -23,24 +23,14 @@ RUN chmod +x /usr/local/bin/kiwix-serve \
 # Copy root filesystem
 COPY rootfs /
 
-# Set permissions and create nginx directories
+# Set permissions and create directories
 RUN chmod a+x /etc/services.d/kiwix/run \
     && chmod a+x /etc/services.d/kiwix/finish \
     && chmod a+x /etc/services.d/nginx/run \
     && chmod a+x /etc/services.d/nginx/finish \
     && chmod a+x /usr/bin/kiwix-helper \
-    && mkdir -p /var/lib/nginx/tmp/client_body \
-    && mkdir -p /var/lib/nginx/tmp/proxy \
-    && mkdir -p /var/lib/nginx/tmp/fastcgi \
-    && mkdir -p /var/lib/nginx/tmp/uwsgi \
-    && mkdir -p /var/lib/nginx/tmp/scgi \
-    && mkdir -p /var/log/nginx \
-    && mkdir -p /tmp/nginx \
     && mkdir -p /run/nginx \
-    && chown -R root:root /var/lib/nginx \
-    && chown -R root:root /var/log/nginx \
-    && chown -R root:root /tmp/nginx \
-    && chown -R root:root /run/nginx
+    && mkdir -p /var/log/nginx
 
 # Create directory for ZIM files
 RUN mkdir -p /data/zim

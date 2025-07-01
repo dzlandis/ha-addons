@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.3.2
+
+- **Fixed nginx user permission issue**: Added explicit `user root;` directive to nginx configuration
+- **Simplified nginx configuration**: Removed complex temp directory configurations that were causing permission conflicts
+- **Improved startup**: nginx now starts without attempting problematic directory ownership changes
+
 ## 1.3.1
 
 - **Fixed nginx permission error**: Resolved "Operation not permitted" error for nginx temp directories
