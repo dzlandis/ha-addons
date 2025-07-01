@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.3.1
+
+- **Fixed nginx permission error**: Resolved "Operation not permitted" error for nginx temp directories
+- **Enhanced directory creation**: Pre-create all necessary nginx temp directories with proper permissions
+- **Improved startup reliability**: Runtime directory creation ensures nginx starts correctly
+
 ## 1.3.0
 
 - **Fixed ingress support**: Implemented proper nginx reverse proxy based on official Home Assistant add-on patterns

@@ -5,6 +5,14 @@
 # Runs nginx for ingress support
 # ==============================================================================
 
+# Create nginx temp directories if they don't exist
+mkdir -p /var/lib/nginx/tmp/client_body \
+         /var/lib/nginx/tmp/proxy \
+         /var/lib/nginx/tmp/fastcgi \
+         /var/lib/nginx/tmp/uwsgi \
+         /var/lib/nginx/tmp/scgi \
+         /run/nginx
+
 # Replace ingress entry placeholder
 sed -i "s|%%ingress_entry%%|$(bashio::addon.ingress_entry)|g" /etc/nginx/nginx.conf
 
