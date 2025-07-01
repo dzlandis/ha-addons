@@ -1,5 +1,13 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.6.0
+
+- **MAJOR ARCHITECTURE CHANGE: Removed nginx proxy completely**: Kiwix now runs directly on the ingress port (8099)
+- **Direct ingress mode**: Home Assistant ingress communicates directly with kiwix-serve, eliminating proxy path issues
+- **Should fix all 404 and asset loading problems**: No more path translation issues between nginx and kiwix-serve
+- **Simplified architecture**: One service instead of two, fewer moving parts, cleaner logs
+- **Disabled nginx service**: nginx.disabled to prevent it from starting
+
 ## 1.5.1
 
 - **Added ingress path detection and logging**: Automatically detects Home Assistant ingress path from addon environment
