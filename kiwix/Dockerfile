@@ -5,7 +5,7 @@
 # It will likely FAIL for any user not on an amd64 (standard PC) architecture.
 # The previous multi-stage build is the correct way to support all Home Assistant users.
 ARG BUILD_FROM
-FROM rnaresh/nginx-custom-modules:1.25.1-alpine
+FROM rnaresh/nginx-custom-modules
 
 # Install runtime dependencies
 # Note: The base image is Alpine, so we can still use apk.
