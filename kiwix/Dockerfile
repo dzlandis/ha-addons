@@ -1,8 +1,7 @@
-# https://developers.home-assistant.io/docs/add-ons/configuration#add-on-dockerfile
-ARG BUILD_FROM
-FROM $BUILD_FROM
+# STAGE 1: Build nginx with the substitutions module
+FROM alpine:3.18 as builder
 
-# Hadolint ignore=DL3003
+#hadolint ignore=DL3003
 RUN \
     NGINX_VERSION="1.24.0" && \
     SUBS_FILTER_VERSION="0.6.4" && \
@@ -13,19 +12,11 @@ RUN \
         zlib-dev \
         openssl-dev \
         git \
-    && apk add --no-cache \
-        python3 \
-        bash \
-        curl \
-        wget \
     && cd /tmp \
-    # Download and extract nginx
     && curl -fSL "http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz" -o nginx.tar.gz \
     && tar -zxf nginx.tar.gz \
-    # Download and extract subs_filter module
     && curl -fSL "https://github.com/yaoweibin/ngx_http_substitutions_filter_module/archive/v${SUBS_FILTER_VERSION}.tar.gz" -o subs.tar.gz \
     && tar -zxf subs.tar.gz \
-    # Configure, build, and install nginx with the module
     && cd nginx-${NGINX_VERSION} \
     && ./configure \
         --prefix=/usr/local/nginx \
@@ -33,12 +24,30 @@ RUN \
         --with-http_ssl_module \
         --with-http_v2_module \
         --conf-path=/etc/nginx/nginx.conf \
-        --sbin-path=/usr/local/sbin/nginx \
+        --sbin-path=/usr/sbin/nginx \
+        --http-log-path=/var/log/nginx/access.log \
+        --error-log-path=/var/log/nginx/error.log \
+        --lock-path=/var/lock/nginx.lock \
+        --pid-path=/var/run/nginx.pid \
+        --modules-path=/usr/lib/nginx/modules \
     && make \
-    && make install \
-    # Clean up build dependencies and temporary files
-    && apk del .build-deps \
-    && rm -rf /tmp/*
+    && make install
+
+# STAGE 2: Create the final add-on image
+# https://developers.home-assistant.io/docs/add-ons/configuration#add-on-dockerfile
+ARG BUILD_FROM
+FROM $BUILD_FROM
+
+# Install runtime dependencies
+RUN \
+    apk add --no-cache \
+        python3 \
+        bash \
+        curl \
+        wget
+
+# Copy the compiled nginx binary from the builder stage
+COPY --from=builder /usr/sbin/nginx /usr/sbin/nginx
 
 # Copy kiwix-serve from official multi-architecture Kiwix image
 COPY --from=ghcr.io/kiwix/kiwix-serve:latest /usr/local/bin/kiwix-serve /usr/local/bin/kiwix-serve

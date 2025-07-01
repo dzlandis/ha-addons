@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.22.0
+
+- **Optimized Build Process**: Refactored the Dockerfile to use a multi-stage build.
+- **Faster Rebuilds**: The time-consuming nginx compilation is now cached in a builder stage, dramatically speeding up subsequent add-on rebuilds.
+- **Smaller Final Image**: This change also results in a leaner final image by excluding build-time dependencies.
+
 ## 1.21.0
 
 - **Switched to Regex-Based Path Rewriting**: Modified the Dockerfile to compile a custom version of nginx with the `ngx_http_substitutions_filter_module`.
