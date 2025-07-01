@@ -1,6 +1,6 @@
 # https://developers.home-assistant.io/docs/add-ons/configuration#add-on-config
 name: Kiwix
-version: "1.3.4"
+version: "1.3.5"
 slug: kiwix
 description: Offline content reader for Wikipedia and other content via ZIM files
 url: "https://github.com/kiwix/kiwix-tools"

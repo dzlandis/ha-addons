@@ -1,5 +1,12 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.3.5
+
+- **Fixed CSS/JS loading in ingress**: Enhanced sub_filter rules to properly rewrite all asset URLs
+- **Improved asset path handling**: Added comprehensive URL rewriting for /skin/, /viewer_settings.js, and other Kiwix assets
+- **Better ingress compatibility**: Fixed plain HTML appearance by ensuring all resources load through ingress path
+- **Enhanced sub_filter coverage**: Added support for single quotes, unquoted paths, and JavaScript-specific URLs
+
 ## 1.3.4
 
 - **Fixed nginx permission issues**: Moved all nginx temp directories to /tmp/nginx/ (always writable in containers)
