@@ -1,5 +1,12 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.14.0
+
+- **FINAL API FIX: JavaScript Content Rewriting**: Implemented a new nginx location block specifically for JavaScript files to rewrite API endpoints within the JS code itself.
+- **Corrected API Call Paths**: The new `sub_filter` rule dynamically replaces paths like `/catalog/` with the full ingress path, ensuring that API calls made from JavaScript are correctly routed.
+- **Resolves All 404 Errors**: This change fixes the final remaining 404 errors for the `/catalog/` API endpoints, making the add-on fully functional.
+- **Complete and Stable Solution**: The combination of HTML and JavaScript rewriting provides a comprehensive and robust solution for full ingress compatibility.
+
 ## 1.13.0
 
 - **CRITICAL FIX: Corrected nginx Configuration Syntax**: Fixed a fatal syntax error in `nginx.conf` that was causing the nginx service to crash and restart in a loop.
