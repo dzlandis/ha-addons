@@ -1,5 +1,12 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.3.9
+
+- **Added ingress path debugging**: Enhanced nginx service script to log actual ingress paths and regex patterns
+- **Fixed regex escaping**: Properly escape special characters in ingress paths for nginx rewrite rules
+- **Debug logging**: Added detailed logging to troubleshoot ingress path replacement issues
+- **Improved diagnostics**: Show actual nginx configuration after ingress path substitution
+
 ## 1.3.8
 
 - **Fixed ingress path rewriting**: Switched from complex regex location matching to simple rewrite rules
