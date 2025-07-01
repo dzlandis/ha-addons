@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.4.2
+
+- **Fixed nginx service restart loop**: Removed problematic debug grep command that was failing and causing service restarts
+- **Cleaner startup**: Simplified nginx service script to avoid restart loops from failed debug commands
+- **Stable logging**: Kept essential ingress path logging but removed problematic configuration dump
+
 ## 1.4.1
 
 - **CRITICAL FIX: Handle mixed ingress behavior**: Discovered HA handles some requests differently - some keep ingress path, others don't
