@@ -1,5 +1,12 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.6.3
+
+- **CRITICAL DISCOVERY: Removed --urlRootLocation parameter**: Found that kiwix-serve's normalizeRootUrl() strips leading slashes, causing path mismatches
+- **Root cause identified**: --urlRootLocation expects all requests to come with the full ingress path prefix, but HA sends requests to "/"
+- **Back to simple approach**: Let kiwix-serve run from root without URL path assumptions
+- **Should resolve INVALID URL errors**: No more path manipulation conflicts between Home Assistant ingress and kiwix-serve
+
 ## 1.6.2
 
 - **Enhanced ingress path debugging**: Added comprehensive logging to diagnose "INVALID URL" errors

@@ -113,48 +113,15 @@ else
         exit 1
     fi
     
-    # Detect ingress path for proper URL generation
-    ingress_path=""
-    if bashio::var.has_value "$(bashio::addon.ingress_entry)"; then
-        ingress_url=$(bashio::addon.ingress_entry)
-        bashio::log.info "Full ingress URL detected: '${ingress_url}'"
-        
-        # Check if it's already just a path or a full URL
-        if [[ "${ingress_url}" == http* ]]; then
-            # Extract just the path part from the full URL
-            # Example: https://homeassistant.local:8123/api/hassio_ingress/xyz/abc -> /api/hassio_ingress/xyz/abc
-            ingress_path=$(echo "${ingress_url}" | sed 's|^https\?://[^/]*||')
-            bashio::log.info "Extracted ingress path from full URL: '${ingress_path}'"
-        else
-            # It's already just the path
-            ingress_path="${ingress_url}"
-            bashio::log.info "Using ingress path as-is: '${ingress_path}'"
-        fi
-    else
-        bashio::log.info "No ingress URL detected - running in direct access mode"
-    fi
-    
-    # Build command arguments
+    # Build command arguments - no urlRootLocation for ingress compatibility
     args=(
         "--port=${port}"
         "--address=0.0.0.0"
         "--threads=${threads}"
     )
     
-    # Add URL root location if we have an ingress path
-    if [ -n "${ingress_path}" ]; then
-        # Clean up the ingress path to ensure it's valid
-        cleaned_path=$(echo "${ingress_path}" | tr -d '\r\n' | sed 's/[[:space:]]*$//')
-        bashio::log.info "Cleaned ingress path: '${cleaned_path}'"
-        bashio::log.info "Original path length: ${#ingress_path}, cleaned length: ${#cleaned_path}"
-        
-        args+=("--urlRootLocation=${cleaned_path}")
-        bashio::log.info "Added --urlRootLocation=${cleaned_path} to Kiwix arguments"
-        bashio::log.info "Final kiwix-serve command will be: kiwix-serve ${args[*]} <zim_files>"
-    else
-        bashio::log.info "No ingress path - Kiwix will serve from root"
-        bashio::log.info "Final kiwix-serve command will be: kiwix-serve ${args[*]} <zim_files>"
-    fi
+    bashio::log.info "Not using --urlRootLocation to avoid path conflicts with Home Assistant ingress"
+    bashio::log.info "Kiwix will serve from root and let Home Assistant handle ingress routing"
     
     bashio::log.info "Kiwix args: ${args[*]}"
     
