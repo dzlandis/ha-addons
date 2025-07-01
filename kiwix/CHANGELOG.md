@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.22.0
+
+- **Simplified Nginx Configuration**: Removed complex and problematic `sub_filter` rules that were causing parsing errors.
+- **Corrected Formatting**: Fixed formatting issues in `nginx.conf` to ensure the file is parsed correctly by nginx.
+- **Stable Ingress**: These changes should finally resolve the nginx startup issues and provide a stable ingress experience.
+
 ## 1.21.0
 
 - **Whitespace-Aware Path Rewriting**: Implemented highly specific `sub_filter` rules that account for newlines and exact indentation within the XML feeds.
