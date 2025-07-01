@@ -1,0 +1,11 @@
+#!/usr/bin/env bashio
+# ==============================================================================
+# Take down nginx gracefully
+# ==============================================================================
+
+bashio::log.info "Stopping nginx..."
+
+# Gracefully stop nginx
+if [ -f /var/run/nginx.pid ]; then
+    nginx -s quit
+fi

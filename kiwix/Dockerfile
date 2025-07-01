@@ -9,6 +9,7 @@ RUN \
         bash \
         curl \
         wget \
+        nginx \
     && rm -rf /var/cache/apk/*
 
 # Copy kiwix-serve from official multi-architecture Kiwix image
@@ -24,6 +25,8 @@ COPY rootfs /
 # Set permissions
 RUN chmod a+x /etc/services.d/kiwix/run \
     && chmod a+x /etc/services.d/kiwix/finish \
+    && chmod a+x /etc/services.d/nginx/run \
+    && chmod a+x /etc/services.d/nginx/finish \
     && chmod a+x /usr/bin/kiwix-helper
 
 # Create directory for ZIM files

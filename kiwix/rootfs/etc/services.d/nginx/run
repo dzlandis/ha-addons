@@ -1,0 +1,32 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Configure and start nginx for ingress support
+# Based on official Home Assistant add-on patterns
+# ==============================================================================
+
+# Get the ingress entry path from Home Assistant
+ingress_entry=$(bashio::addon.ingress_entry)
+bashio::log.info "Configuring nginx for ingress entry: ${ingress_entry}"
+
+# Replace the placeholder with the actual ingress path
+sed -i "s#%%ingress_entry%%#${ingress_entry}#g" /etc/nginx/nginx.conf
+
+# Create necessary directories
+mkdir -p /var/log/nginx
+mkdir -p /var/lib/nginx/tmp
+
+# Test nginx configuration
+if nginx -t; then
+    bashio::log.info "Nginx configuration is valid"
+else
+    bashio::log.error "Nginx configuration is invalid!"
+    exit 1
+fi
+
+# Wait for kiwix to be ready
+bashio::log.info "Waiting for kiwix-serve to be ready..."
+bashio::net.wait_for 8090 localhost 300
+
+# Start nginx
+bashio::log.info "Starting nginx reverse proxy for ingress support..."
+exec nginx -g "daemon off;"

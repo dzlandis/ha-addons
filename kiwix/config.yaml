@@ -35,7 +35,6 @@ startup: application
 boot: auto
 ingress: true
 ingress_port: 8099
-ingress_entry: /
 panel_icon: mdi:book-open-page-variant
 panel_title: Kiwix
 panel_admin: false
