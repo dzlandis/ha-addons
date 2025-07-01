@@ -1,5 +1,20 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.4.1
+
+- **CRITICAL FIX: Handle mixed ingress behavior**: Discovered HA handles some requests differently - some keep ingress path, others don't
+- **Dual location blocks**: Added specific location for full ingress paths + fallback for stripped paths
+- **Covers all cases**: viewer_settings.js (keeps path) vs skin/kiwix.css (stripped path) now both work
+- **Complete ingress compatibility**: Finally addresses the inconsistent Home Assistant ingress path handling
+
+## 1.4.0
+
+- **BREAKTHROUGH: Fixed ingress completely**: Discovered Home Assistant already strips ingress paths - removed unnecessary rewrite rules
+- **Simplified to direct proxy**: nginx now directly proxies requests to kiwix-serve without path manipulation
+- **Root cause identified**: The 404s were caused by trying to strip paths that were already stripped by HA ingress
+- **Clean configuration**: Removed all complex rewrite logic, keeping only essential sub_filter for HTML links
+- **Major stability improvement**: Back to simple, reliable proxy configuration that actually works
+
 ## 1.3.9
 
 - **Added ingress path debugging**: Enhanced nginx service script to log actual ingress paths and regex patterns
