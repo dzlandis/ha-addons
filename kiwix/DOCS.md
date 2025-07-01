@@ -112,10 +112,20 @@ The sidebar entry uses a book icon (📖) and is accessible to all users (not ju
 - Try restarting the add-on if needed
 
 **Interface looks broken in sidebar?**
-- The add-on now uses nginx reverse proxy for better ingress compatibility
+- The add-on uses nginx reverse proxy with HTML rewriting for full Home Assistant ingress compatibility
+- CSS, JavaScript, and other assets are automatically rewritten to work within the ingress system
 - Check the add-on logs for any nginx or kiwix-serve errors
 - Try restarting the add-on to reset the nginx configuration
 - Verify that both nginx and kiwix services are running in the logs
+
+### Technical Implementation
+
+The add-on uses a sophisticated nginx reverse proxy configuration to ensure full compatibility with Home Assistant's ingress system:
+
+- **Asset URL Rewriting**: Automatically converts absolute asset URLs to relative paths so CSS, JavaScript, and images load correctly
+- **API Endpoint Handling**: Rewrites JavaScript fetch calls and XMLHttpRequest URLs for search and content APIs
+- **Form Action Updates**: Ensures search forms work properly within the ingress environment
+- **Multi-Service Architecture**: Runs both kiwix-serve and nginx in parallel for optimal performance and compatibility
 
 **Add-on won't start?**
 - Check configuration syntax

@@ -1,5 +1,14 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.8.0
+
+- **FINAL SOLUTION: HTML Rewriting with nginx sub_filter**: Implemented comprehensive HTML content rewriting to fix all asset loading issues
+- **Asset URL transformation**: Converts absolute URLs (like `/skin/kiwix.css`) to relative URLs (`./skin/kiwix.css`) for ingress compatibility
+- **JavaScript API fixing**: Rewrites fetch() and XMLHttpRequest calls to use relative paths for search and content APIs
+- **Form action updates**: Ensures search forms work properly within the Home Assistant ingress environment
+- **Complete UI compatibility**: All CSS, JavaScript, images, and interactive elements now work correctly in Home Assistant sidebar
+- **Robust and tested approach**: Based on real-world testing and understanding of Home Assistant ingress path behavior
+
 ## 1.7.0
 
 - **SOLUTION: Dual-mode nginx proxy**: Confirmed Home Assistant ingress inconsistency - some requests keep full path, others stripped

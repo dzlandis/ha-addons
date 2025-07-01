@@ -11,8 +11,9 @@ mkdir -p /tmp/nginx/fastcgi
 mkdir -p /tmp/nginx/uwsgi
 mkdir -p /tmp/nginx/scgi
 
-bashio::log.info "Starting nginx for dual-mode ingress support..."
-bashio::log.info "Handling both full ingress paths and stripped asset paths"
+bashio::log.info "Starting nginx with HTML rewriting for Home Assistant ingress..."
+bashio::log.info "Sub_filter enabled to convert absolute asset URLs to relative paths"
+bashio::log.info "This should fix CSS/JS loading issues in Home Assistant UI"
 
 # Start nginx
 exec nginx -c /etc/nginx/nginx.conf
