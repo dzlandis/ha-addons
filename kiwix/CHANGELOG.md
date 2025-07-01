@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.17.0
+
+- **Simplified Nginx Configuration**: Reverted to a more generic `sub_filter` configuration to avoid overly specific rules.
+- **Robust Path Rewriting**: This change provides a more robust and maintainable solution for rewriting paths, ensuring better compatibility with Home Assistant's ingress.
+- **Consolidated Rules**: The simplified ruleset is easier to manage and less prone to breaking with future updates to the Kiwix application.
+
 ## 1.16.0
 
 - **Fix for RSS Feeds**: Added `application/xml` and `application/atom+xml` to the `sub_filter_types` in the nginx configuration.
