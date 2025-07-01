@@ -28,15 +28,7 @@ RUN chmod a+x /etc/services.d/kiwix/run \
     && chmod a+x /etc/services.d/kiwix/finish \
     && chmod a+x /etc/services.d/nginx/run \
     && chmod a+x /etc/services.d/nginx/finish \
-    && chmod a+x /usr/bin/kiwix-helper \
-    && mkdir -p /var/lib/nginx/tmp/client_body \
-    && mkdir -p /var/lib/nginx/tmp/proxy \
-    && mkdir -p /var/lib/nginx/tmp/fastcgi \
-    && mkdir -p /var/lib/nginx/tmp/uwsgi \
-    && mkdir -p /var/lib/nginx/tmp/scgi \
-    && mkdir -p /var/lib/nginx/logs \
-    && mkdir -p /var/log/nginx \
-    && mkdir -p /run/nginx
+    && chmod a+x /usr/bin/kiwix-helper
 
 # Create directory for ZIM files
 RUN mkdir -p /data/zim

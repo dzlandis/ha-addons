@@ -1,5 +1,12 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.3.4
+
+- **Fixed nginx permission issues**: Moved all nginx temp directories to /tmp/nginx/ (always writable in containers)
+- **Resolved directory creation errors**: Eliminated permission denied errors when creating nginx directories
+- **Simplified Dockerfile**: Removed unnecessary directory creation that was causing permission conflicts
+- **Improved container compatibility**: Using standard /tmp paths that work across all Home Assistant base images
+
 ## 1.3.3
 
 - **Fixed nginx directory creation issues**: Create all required nginx temp directories at build time and runtime
