@@ -1,5 +1,12 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.12.0
+
+- **CRITICAL FIX: Reinstated `sub_filter` for HTML Rewriting**: Re-added the essential `sub_filter` directive to the nginx configuration to dynamically rewrite asset URLs in the HTML response.
+- **Correct Ingress Path Handling**: The `sub_filter` now correctly uses the `$ingress_path` variable to prefix all asset URLs, ensuring they are loaded through the proper Home Assistant ingress path.
+- **Resolves All Asset Loading Errors**: This change fixes the root cause of the 404 errors for CSS, JavaScript, and other assets, making the add-on fully functional within the Home Assistant UI.
+- **Stable and Production-Ready**: The combination of the simplified proxy and dynamic HTML rewriting provides a robust and reliable solution for ingress.
+
 ## 1.11.0
 
 - **FINAL FIX: Simplified Nginx Proxy**: Reverted to a streamlined dual-location nginx configuration, removing the overly complex multi-server setup.
