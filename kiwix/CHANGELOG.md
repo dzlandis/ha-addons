@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.18.0
+
+- **Fix for Spaced Hrefs**: Added a new `sub_filter` to handle `href` attributes that have a leading space.
+- **Improved XML Parsing**: This ensures that links within the XML feeds are correctly parsed and rewritten, even with minor formatting inconsistencies.
+- **Resolves Final Pathing Issues**: This should resolve the remaining issues with broken links in the Kiwix add-on.
+
 ## 1.17.0
 
 - **Simplified Nginx Configuration**: Reverted to a more generic `sub_filter` configuration to avoid overly specific rules.
