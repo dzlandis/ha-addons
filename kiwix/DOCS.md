@@ -118,16 +118,43 @@ The sidebar entry uses a book icon (📖) and is accessible to all users (not ju
 - Try restarting the add-on to reset the nginx configuration
 - Verify that both nginx and kiwix services are running in the logs
 
-### Technical Implementation
+## Technical Implementation
 
-The add-on uses a sophisticated nginx reverse proxy configuration to ensure full compatibility with Home Assistant's ingress system:
+### Home Assistant Ingress Integration
 
-- **Asset URL Rewriting**: Automatically converts absolute asset URLs to relative paths so CSS, JavaScript, and images load correctly
-- **API Endpoint Handling**: Rewrites JavaScript fetch calls and XMLHttpRequest URLs for search and content APIs
-- **Form Action Updates**: Ensures search forms work properly within the ingress environment
-- **Multi-Service Architecture**: Runs both kiwix-serve and nginx in parallel for optimal performance and compatibility
+This add-on implements a sophisticated solution to ensure all Kiwix UI assets (CSS, JavaScript, images) load correctly within Home Assistant's ingress system:
+
+#### The Challenge
+- Kiwix generates absolute URLs like `/skin/kiwix.css` that don't work with Home Assistant's ingress paths
+- Assets need to be requested through the full ingress path: `/api/hassio_ingress/[TOKEN]/skin/kiwix.css`
+- Home Assistant's ingress system can be inconsistent in how it routes different types of requests
+
+#### The Solution (v1.9.0+)
+- **Dynamic Token Extraction**: nginx extracts the ingress token from incoming requests using regex patterns
+- **HTML Content Rewriting**: Uses nginx's `sub_filter` to rewrite asset URLs in HTML responses
+- **Complete Asset Coverage**: Handles CSS, JavaScript, images, API calls, and form actions
+- **Intelligent Proxying**: Strips ingress paths before forwarding to Kiwix, then rewrites responses
+
+#### Architecture
+```
+Home Assistant ──ingress──> nginx (port 8099) ──proxy──> kiwix-serve (port 8090)
+                                │
+                                └─> Rewrites HTML content with correct asset URLs
+```
+
+#### Key Features
+- **Seamless Integration**: Works transparently with Home Assistant's sidebar
+- **Asset Compatibility**: All CSS styling and JavaScript functionality preserved
+- **API Functionality**: Search, content loading, and navigation work correctly
+- **Security**: Ingress-only access prevents direct external access to Kiwix
+
+### Troubleshooting
 
 **Add-on won't start?**
 - Check configuration syntax
 - Ensure library path exists and is accessible
 - Review Home Assistant supervisor logs
+
+**Assets not loading in UI?**
+- This should be resolved in v1.9.0+ - check add-on logs for nginx rewriting activity
+- Verify ingress integration is working by checking request logs

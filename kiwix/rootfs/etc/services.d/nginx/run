@@ -11,9 +11,9 @@ mkdir -p /tmp/nginx/fastcgi
 mkdir -p /tmp/nginx/uwsgi
 mkdir -p /tmp/nginx/scgi
 
-bashio::log.info "Starting nginx with HTML rewriting for Home Assistant ingress..."
-bashio::log.info "Sub_filter enabled to convert absolute asset URLs to relative paths"
-bashio::log.info "This should fix CSS/JS loading issues in Home Assistant UI"
+bashio::log.info "Starting nginx with ingress token extraction and URL rewriting..."
+bashio::log.info "This captures the HA ingress token and rewrites asset URLs properly"
+bashio::log.info "Asset URLs will be rewritten to use full /api/hassio_ingress/TOKEN/path format"
 
 # Start nginx
 exec nginx -c /etc/nginx/nginx.conf

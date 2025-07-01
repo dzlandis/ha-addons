@@ -1,5 +1,15 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.9.0
+
+- **MAJOR FIX: Ingress Token Extraction and URL Rewriting**: Completely resolved asset loading issues with Home Assistant ingress
+- **Dynamic token capture**: nginx now extracts the ingress token from incoming requests (`/api/hassio_ingress/TOKEN/...`)
+- **Intelligent HTML rewriting**: Uses `sub_filter` to rewrite all asset URLs in HTML to include the full ingress path
+- **Asset URL transformation**: Converts `/skin/kiwix.css` to `/api/hassio_ingress/TOKEN/skin/kiwix.css` dynamically
+- **CSS and JS compatibility**: All stylesheets, JavaScript files, and resources now load correctly through ingress
+- **Complete solution**: Addresses the root cause where assets were being requested directly to HA port 8123 instead of through the add-on
+- **Production ready**: This implementation should work reliably with all Kiwix UI features in Home Assistant
+
 ## 1.8.0
 
 - **FINAL SOLUTION: HTML Rewriting with nginx sub_filter**: Implemented comprehensive HTML content rewriting to fix all asset loading issues
