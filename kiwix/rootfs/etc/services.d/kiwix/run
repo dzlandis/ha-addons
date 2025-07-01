@@ -128,20 +128,9 @@ else
     bashio::log.info "HASSIO_TOKEN: ${HASSIO_TOKEN:-'not set'}"
     env | grep -i ingress || bashio::log.info "No ingress-related env vars found"
     
-    # Set URL root location for ingress compatibility
-    # This ensures CSS, JS, and other assets load correctly when accessed via Home Assistant sidebar
-    bashio::log.info "Configuring for ingress compatibility"
-    # Use bashio function to get the correct ingress entry
-    ingress_entry="/"
-    if bashio::addon.ingress_entry 2>/dev/null; then
-        ingress_entry=$(bashio::addon.ingress_entry)
-        bashio::log.info "Got ingress entry from bashio: ${ingress_entry}"
-    else
-        bashio::log.info "Could not get ingress entry from bashio, using default: ${ingress_entry}"
-    fi
-    
-    args+=("--urlRootLocation=${ingress_entry}")
-    bashio::log.info "URL root location set to: ${ingress_entry}"
+    # For now, don't set URL root location as it's causing issues
+    # Home Assistant's ingress should handle path translation automatically
+    bashio::log.info "Skipping URL root location configuration - letting ingress handle path translation"
     
     # Add optional arguments
     if [ "${search_limit}" -gt 0 ]; then
