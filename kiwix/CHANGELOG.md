@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.21.0
+
+- **Switched to Regex-Based Path Rewriting**: Modified the Dockerfile to compile a custom version of nginx with the `ngx_http_substitutions_filter_module`.
+- **Robust and Maintainable**: Replaced all brittle `sub_filter` rules with a single, powerful `subs_filter` regular expression that handles all path rewriting for `href`, `src`, and `action` attributes, regardless of formatting.
+- **The True Definitive Fix**: This provides a much cleaner, more robust, and permanent solution to all ingress-related pathing issues.
+
 ## 1.20.0
 
 - **Whitespace-Aware Path Rewriting**: Implemented highly specific `sub_filter` rules that account for newlines and exact indentation within the XML feeds.
