@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.3.7
+
+- **Fixed nginx configuration error**: Removed problematic `proxy_redirect default` directive that conflicts with variables in `proxy_pass`
+- **Updated add-on logos**: Refreshed icon and logo images for better visual representation
+- **Improved nginx compatibility**: Configuration now properly handles variable-based proxy passing without redirect conflicts
+
 ## 1.3.6
 
 - **Complete ingress path handling overhaul**: Switched to regex-based location matching to properly strip ingress prefix
