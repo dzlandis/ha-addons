@@ -2,14 +2,16 @@
 
 ## How to use
 
-This add-on provides an offline content reader for educational materials like Wikipedia, accessible through ZIM files.
+This add-on provides an offline content reader for educational materials like Wikipedia, accessible through ZIM files. **The add-on integrates seamlessly with Home Assistant and appears in the sidebar for easy access.**
 
 ### Getting Started
 
 1. **Download ZIM files**: Visit [library.kiwix.org](https://library.kiwix.org/) to download content
 2. **Upload files**: Place your ZIM files in the configured library path (default: `/share/kiwix/`)
 3. **Start the add-on**: The service will automatically detect and serve your content
-4. **Access content**: Open `http://homeassistant.local:8080` in your browser
+4. **Access content**: 
+   - **Via sidebar**: Click "Kiwix" in the Home Assistant sidebar (recommended)
+   - **Direct access**: Open `http://homeassistant.local:8080` in your browser
 
 ### Configuration Options
 
@@ -88,6 +90,16 @@ kiwix-helper check
 kiwix-helper help
 ```
 
+### Sidebar Integration
+
+The Kiwix add-on integrates seamlessly with Home Assistant through the ingress feature. Once the add-on is running, you'll see a "Kiwix" entry in your Home Assistant sidebar. This provides:
+
+- **Easy access**: No need to remember ports or URLs
+- **Seamless integration**: Works with Home Assistant authentication
+- **Consistent experience**: Matches the look and feel of other Home Assistant interfaces
+
+The sidebar entry uses a book icon (📖) and is accessible to all users (not just administrators).
+
 ### Troubleshooting
 
 **No content visible?**
@@ -97,7 +109,8 @@ kiwix-helper help
 - Restart the add-on after adding new files
 
 **Cannot access the web interface?**
-- Verify the port is not blocked by firewall
+- **Sidebar integration**: Look for "Kiwix" in your Home Assistant sidebar
+- Verify the port is not blocked by firewall (for direct access)
 - Check if another service is using the same port
 - Review add-on logs for error messages
 
