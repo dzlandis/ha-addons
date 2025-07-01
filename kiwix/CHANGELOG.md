@@ -1,5 +1,13 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.7.0
+
+- **SOLUTION: Dual-mode nginx proxy**: Confirmed Home Assistant ingress inconsistency - some requests keep full path, others stripped
+- **Smart nginx configuration**: Two location blocks handle both `/api/hassio_ingress/xyz/path` and `/path` requests  
+- **Back to nginx proxy architecture**: Kiwix on port 8090, nginx on 8099 handling path translation
+- **Should fix all asset loading**: CSS, JS, and other assets will load correctly regardless of how HA routes them
+- **Based on real-world testing**: Addresses confirmed behavior where viewer_settings.js keeps path but skin/kiwix.css loses it
+
 ## 1.6.3
 
 - **CRITICAL DISCOVERY: Removed --urlRootLocation parameter**: Found that kiwix-serve's normalizeRootUrl() strips leading slashes, causing path mismatches

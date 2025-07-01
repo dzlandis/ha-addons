@@ -24,7 +24,7 @@ no_library_button=$(bashio::config 'no_library_button')
 
 # Set defaults
 library_path=${library_path:-"/share/kiwix"}
-port=8099
+port=8090  # Internal port - nginx will proxy from 8099 to 8090
 log_level=${log_level:-"info"}
 threads=${threads:-4}
 search_limit=${search_limit:-0}
@@ -91,8 +91,8 @@ EOF
     cd /tmp
     exec python3 -m http.server ${port} --bind 0.0.0.0
 else
-    # Start Kiwix server with ZIM files - direct ingress mode
-    bashio::log.info "Starting Kiwix server on direct ingress port ${port}"
+    # Start Kiwix server with ZIM files - nginx proxy mode
+    bashio::log.info "Starting Kiwix server on internal port ${port}"
     bashio::log.info "Library path: ${library_path}"
     bashio::log.info "Log level: ${log_level}"
     bashio::log.info "Threads: ${threads}"
