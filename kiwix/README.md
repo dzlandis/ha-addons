@@ -41,8 +41,8 @@ Kiwix is a free and open-source offline content reader that allows you to access
 3. **Copy ZIM files** to your configured library path (default: `/share/kiwix/`)
 4. **Start the add-on**
 5. **Access content**:
-   - **Via Home Assistant sidebar**: Click "Kiwix" in the sidebar (recommended)
-   - **Direct access**: Visit `http://homeassistant.local:8080`
+   - **Via Home Assistant sidebar**: Click "Kiwix" in the sidebar (recommended and secure)
+   - The add-on integrates seamlessly into Home Assistant's interface
 
 ### Popular ZIM files to try:
 - **Wikipedia** (available in many languages)
@@ -58,7 +58,6 @@ Add the following configuration to your `config.yaml`:
 ```yaml
 log_level: info
 library_path: /share/kiwix
-port: 8080
 threads: 4
 search_limit: 0
 block_external_links: false
@@ -75,9 +74,27 @@ Default: `info`
 Path where ZIM files are stored. This path should be accessible from within the container.
 Default: `/share/kiwix`
 
-### Option: `port` (optional)
-Port number for the Kiwix web server.
-Default: `8080`
+### Option: `threads` (optional)
+Number of server threads for handling requests. Higher values may improve performance with concurrent users.
+Range: 1-16
+Default: `4`
+
+### Option: `search_limit` (optional)
+Maximum number of search results to return (0 = unlimited).
+Range: 0-100
+Default: `0`
+
+### Option: `block_external_links` (optional)
+Block access to external links when browsing content for security.
+Default: `false`
+
+### Option: `no_search_bar` (optional)
+Hide the search bar in the Kiwix interface.
+Default: `false`
+
+### Option: `no_library_button` (optional)
+Hide the library button in the Kiwix interface.
+Default: `false`
 
 ## Support
 

@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Home Assistant Community Add-on: Kiwix
+# Take down nginx gracefully
+# ==============================================================================
+
+bashio::log.info "Stopping nginx..."

@@ -6,7 +6,6 @@
 
 # Declare variables
 declare library_path
-declare port
 declare log_level
 declare threads
 declare search_limit
@@ -16,7 +15,6 @@ declare no_library_button
 
 # Get configuration options
 library_path=$(bashio::config 'library_path')
-port=$(bashio::config 'port')
 log_level=$(bashio::config 'log_level')
 threads=$(bashio::config 'threads')
 search_limit=$(bashio::config 'search_limit')
@@ -26,7 +24,7 @@ no_library_button=$(bashio::config 'no_library_button')
 
 # Set defaults
 library_path=${library_path:-"/share/kiwix"}
-port=${port:-8080}
+port=8090  # Internal port - nginx will proxy from 8080 to 8090
 log_level=${log_level:-"info"}
 threads=${threads:-4}
 search_limit=${search_limit:-0}
@@ -89,12 +87,12 @@ if [ ! "$(ls -A ${library_path}/*.zim 2>/dev/null)" ]; then
 EOF
     
     # Start a simple HTTP server for the welcome page
-    bashio::log.info "Starting welcome server on port ${port}"
+    bashio::log.info "Starting welcome server on internal port ${port} (nginx will proxy from 8080)"
     cd /tmp
     exec python3 -m http.server ${port}
 else
     # Start Kiwix server with ZIM files
-    bashio::log.info "Starting Kiwix server on port ${port}"
+    bashio::log.info "Starting Kiwix server on internal port ${port} (nginx will proxy from 8080)"
     bashio::log.info "Library path: ${library_path}"
     bashio::log.info "Log level: ${log_level}"
     bashio::log.info "Threads: ${threads}"

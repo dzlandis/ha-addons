@@ -10,8 +10,8 @@ This add-on provides an offline content reader for educational materials like Wi
 2. **Upload files**: Place your ZIM files in the configured library path (default: `/share/kiwix/`)
 3. **Start the add-on**: The service will automatically detect and serve your content
 4. **Access content**: 
-   - **Via sidebar**: Click "Kiwix" in the Home Assistant sidebar (recommended)
-   - **Direct access**: Open `http://homeassistant.local:8080` in your browser
+   - **Via sidebar**: Click "Kiwix" in the Home Assistant sidebar (recommended and secure)
+   - The add-on integrates seamlessly into Home Assistant's interface
 
 ### Configuration Options
 
@@ -32,9 +32,6 @@ Specify where your ZIM files are stored. The path must be accessible from within
 - `/share/kiwix/` (default) - Files stored in Home Assistant's share folder
 - `/media/kiwix/` - Files stored in media folder
 - `/config/kiwix/` - Files stored in config folder
-
-#### Port
-The port number where Kiwix will serve content. Default is 8080.
 
 #### Threads
 Number of threads to run in parallel (1-16). Higher values can improve performance with multiple simultaneous users. Default is 4.
@@ -110,15 +107,15 @@ The sidebar entry uses a book icon (📖) and is accessible to all users (not ju
 
 **Cannot access the web interface?**
 - **Sidebar integration**: Look for "Kiwix" in your Home Assistant sidebar
-- Verify the port is not blocked by firewall (for direct access)
-- Check if another service is using the same port
+- Ensure the add-on is running and shows as "Started"
 - Review add-on logs for error messages
+- Try restarting the add-on if needed
 
 **Interface looks broken in sidebar?**
-- This usually indicates CSS/JS loading issues in ingress mode
-- Check the add-on logs for "URL root location" messages
-- Try restarting the add-on
-- If issues persist, try accessing via direct URL first, then sidebar
+- The add-on now uses nginx reverse proxy for better ingress compatibility
+- Check the add-on logs for any nginx or kiwix-serve errors
+- Try restarting the add-on to reset the nginx configuration
+- Verify that both nginx and kiwix services are running in the logs
 
 **Add-on won't start?**
 - Check configuration syntax

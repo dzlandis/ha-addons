@@ -1,5 +1,14 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.3.0
+
+- **Major ingress improvement**: Implemented nginx reverse proxy for reliable Home Assistant integration
+- **Security enhancement**: Removed direct port access, now accessible only via Home Assistant ingress
+- Fixed ingress path handling using industry-standard nginx template system
+- Improved asset loading (CSS/JS) in Home Assistant sidebar
+- Removed configurable port option for better security
+- Enhanced troubleshooting documentation
+
 ## 1.2.0
 
 - **Fixed ingress compatibility**: Resolved CSS/JS loading issues when accessing via Home Assistant sidebar

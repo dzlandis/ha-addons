@@ -1,0 +1,48 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Home Assistant Community Add-on: Kiwix
+# Runs nginx as a reverse proxy for ingress support
+# ==============================================================================
+
+bashio::log.info "Starting nginx reverse proxy..."
+
+# Prepare nginx configuration
+NGINX_CONFIG="/etc/nginx/nginx.conf"
+NGINX_CONFIG_TEMP="/tmp/nginx.conf"
+
+# Copy the template configuration
+cp "${NGINX_CONFIG}" "${NGINX_CONFIG_TEMP}"
+
+# Get the ingress entry path from Home Assistant
+INGRESS_ENTRY=$(bashio::addon.ingress_entry)
+bashio::log.info "Ingress entry path: ${INGRESS_ENTRY}"
+
+# If running via ingress, replace the placeholder with the actual ingress path
+if bashio::var.has_value "${INGRESS_ENTRY}"; then
+    bashio::log.info "Configuring nginx for ingress access"
+    sed -i "s|%%ingress_entry%%|${INGRESS_ENTRY}|g" "${NGINX_CONFIG_TEMP}"
+else
+    bashio::log.info "Configuring nginx for direct access only"
+    # For direct access, we still need to handle the placeholder
+    # We'll make the ingress location block handle root as well
+    sed -i "s|%%ingress_entry%%||g" "${NGINX_CONFIG_TEMP}"
+fi
+
+# Replace the original config with the processed one
+cp "${NGINX_CONFIG_TEMP}" "${NGINX_CONFIG}"
+
+# Create nginx directories
+mkdir -p /var/log/nginx
+mkdir -p /var/lib/nginx/tmp
+
+# Test nginx configuration
+if nginx -t -c "${NGINX_CONFIG}"; then
+    bashio::log.info "Nginx configuration is valid"
+else
+    bashio::log.error "Nginx configuration is invalid!"
+    bashio::exit.nok
+fi
+
+# Start nginx
+bashio::log.info "Starting nginx..."
+exec nginx -g "daemon off;" -c "${NGINX_CONFIG}"
