@@ -24,7 +24,7 @@ no_library_button=$(bashio::config 'no_library_button')
 
 # Set defaults
 library_path=${library_path:-"/share/kiwix"}
-port=8090  # Internal port - nginx will proxy from 8080 to 8090
+port=8099  # Ingress port as per Home Assistant specification
 log_level=${log_level:-"info"}
 threads=${threads:-4}
 search_limit=${search_limit:-0}
@@ -87,12 +87,12 @@ if [ ! "$(ls -A ${library_path}/*.zim 2>/dev/null)" ]; then
 EOF
     
     # Start a simple HTTP server for the welcome page
-    bashio::log.info "Starting welcome server on internal port ${port} (nginx will proxy from 8080)"
+    bashio::log.info "Starting welcome server on port ${port}"
     cd /tmp
-    exec python3 -m http.server ${port}
+    exec python3 -m http.server ${port} --bind 0.0.0.0
 else
     # Start Kiwix server with ZIM files
-    bashio::log.info "Starting Kiwix server on internal port ${port} (nginx will proxy from 8080)"
+    bashio::log.info "Starting Kiwix server on port ${port}"
     bashio::log.info "Library path: ${library_path}"
     bashio::log.info "Log level: ${log_level}"
     bashio::log.info "Threads: ${threads}"
@@ -120,15 +120,19 @@ else
         "--threads=${threads}"
     )
     
-    # Debug: Log environment variables that might help with ingress
-    bashio::log.info "Environment variables for ingress debugging:"
-    bashio::log.info "SUPERVISOR_TOKEN: ${SUPERVISOR_TOKEN:-'not set'}"
-    bashio::log.info "HASSIO_TOKEN: ${HASSIO_TOKEN:-'not set'}"
-    env | grep -i ingress || bashio::log.info "No ingress-related env vars found"
-    
-    # For now, don't set URL root location as it's causing issues
-    # Home Assistant's ingress should handle path translation automatically
-    bashio::log.info "Skipping URL root location configuration - letting ingress handle path translation"
+    # Check if we're running via ingress
+    if bashio::var.has_value "$(bashio::addon.ingress_entry)"; then
+        ingress_path="$(bashio::addon.ingress_entry)"
+        bashio::log.info "Ingress entry path: ${ingress_path}"
+        
+        # For ingress, we need to handle the dynamic path that Home Assistant provides
+        # The actual path will be something like /api/hassio_ingress/TOKEN/
+        # We'll let kiwix-serve handle this by NOT setting urlRootLocation
+        # This way it serves content from root and lets HA ingress handle path translation
+        bashio::log.info "Running in ingress mode - letting Home Assistant handle path translation"
+    else
+        bashio::log.info "Running in direct access mode"
+    fi
     
     # Add optional arguments
     if [ "${search_limit}" -gt 0 ]; then

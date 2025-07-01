@@ -2,12 +2,11 @@
 
 ## 1.3.0
 
-- **Major ingress improvement**: Implemented nginx reverse proxy for reliable Home Assistant integration
-- **Security enhancement**: Removed direct port access, now accessible only via Home Assistant ingress
-- Fixed ingress path handling using industry-standard nginx template system
-- Improved asset loading (CSS/JS) in Home Assistant sidebar
-- Removed configurable port option for better security
-- Enhanced troubleshooting documentation
+- **Simplified ingress implementation**: Using proper Home Assistant ingress specification
+- **Security enhancement**: Access only via Home Assistant ingress (port 8099)
+- Follows official Home Assistant ingress requirements (172.30.32.2 IP restriction)
+- Removed complex nginx reverse proxy in favor of native kiwix-serve ingress support
+- Improved reliability and reduced complexity
 
 ## 1.2.0
 

@@ -41,8 +41,8 @@ Kiwix is a free and open-source offline content reader that allows you to access
 3. **Copy ZIM files** to your configured library path (default: `/share/kiwix/`)
 4. **Start the add-on**
 5. **Access content**:
-   - **Via Home Assistant sidebar**: Click "Kiwix" in the sidebar (recommended and secure)
-   - The add-on integrates seamlessly into Home Assistant's interface
+   - **Via Home Assistant sidebar**: Click "Kiwix" in the sidebar (secure ingress access)
+   - The add-on is accessible only through Home Assistant's secure ingress system
 
 ### Popular ZIM files to try:
 - **Wikipedia** (available in many languages)
