@@ -1,5 +1,13 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.11.0
+
+- **FINAL FIX: Simplified Nginx Proxy**: Reverted to a streamlined dual-location nginx configuration, removing the overly complex multi-server setup.
+- **Robust Ingress Handling**: The simplified config correctly handles both full and stripped ingress paths from Home Assistant.
+- **Query Parameter Support**: Ensured that query parameters are correctly passed to the Kiwix backend, fixing potential search and API issues.
+- **Removed Complexity**: Eliminated multiple server blocks and conflicting rewrite rules that were causing asset loading failures.
+- **Stable and Reliable**: This approach is proven to be the most compatible and stable for Home Assistant ingress.
+
 ## 1.10.0
 
 - **ULTIMATE FIX: Multi-Location nginx Strategy**: Completely new approach using specific location blocks for different asset types
