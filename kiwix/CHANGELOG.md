@@ -1,5 +1,13 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.3.6
+
+- **Complete ingress path handling overhaul**: Switched to regex-based location matching to properly strip ingress prefix
+- **Universal asset proxying**: All assets now properly proxied regardless of path structure
+- **Simplified sub_filter rules**: Reduced to essential HTML link rewriting only
+- **Fixed 404 errors**: Eliminated asset loading failures by handling path stripping at nginx location level
+- **Improved reliability**: Universal approach works with any Kiwix UI structure changes
+
 ## 1.3.5
 
 - **Fixed CSS/JS loading in ingress**: Enhanced sub_filter rules to properly rewrite all asset URLs
