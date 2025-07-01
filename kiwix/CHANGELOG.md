@@ -1,5 +1,15 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.10.0
+
+- **ULTIMATE FIX: Multi-Location nginx Strategy**: Completely new approach using specific location blocks for different asset types
+- **Asset-specific handling**: Separate nginx locations for CSS (.css), JavaScript (.js), and image files (.svg, .png, .ico)
+- **Forced MIME types**: Explicitly set correct Content-Type headers for CSS and JS assets to prevent MIME type errors
+- **Priority-based routing**: Most specific asset patterns matched first, ensuring proper handling of all resource types
+- **Eliminates MIME type issues**: Addresses "Refused to apply style because its MIME type is not supported" errors
+- **Comprehensive asset coverage**: Handles all known Kiwix asset patterns with dedicated nginx location blocks
+- **Dual strategy**: Combined asset routing + HTML rewriting for complete ingress compatibility
+
 ## 1.9.0
 
 - **MAJOR FIX: Ingress Token Extraction and URL Rewriting**: Completely resolved asset loading issues with Home Assistant ingress

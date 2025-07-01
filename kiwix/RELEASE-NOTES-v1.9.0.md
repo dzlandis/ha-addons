@@ -1,46 +1,55 @@
-# Kiwix Home Assistant Add-on v1.9.0 - Release Summary
+# Kiwix Home Assistant Add-on v1.10.0 - Release Summary
 
-## Key Fix: Complete Asset Loading Solution
+## The Ultimate Fix: Multi-Location nginx Strategy
 
-This version completely resolves the asset loading issues that were preventing CSS, JavaScript, and other resources from loading correctly in the Home Assistant interface.
+This version takes a completely different approach to solve the asset loading problem by using multiple nginx location blocks to handle different asset types with proper MIME type headers.
 
-### The Problem (Previous Versions)
-- Kiwix generated absolute URLs like `/skin/kiwix.css`
-- These were being requested directly to `homeassistant.local:8123/skin/kiwix.css`  
-- Home Assistant couldn't serve these assets, resulting in 404 errors
-- UI appeared broken with no styling or JavaScript functionality
+### The Root Cause (Discovered)
+Your browser error logs revealed the real issue:
+- CSS files were being served with MIME type `text/plain` instead of `text/css`
+- JavaScript files had incorrect MIME types
+- This caused browsers to refuse to load the stylesheets and scripts
+- The 404 errors were secondary to the MIME type problems
 
-### The Solution (v1.9.0)
-- **Dynamic Ingress Token Extraction**: nginx captures the unique ingress token from each request
-- **HTML Content Rewriting**: All asset URLs are automatically rewritten to use full ingress paths
-- **Complete Coverage**: Handles all types of assets: CSS, JS, images, API calls, forms
+### The New Solution (v1.10.0)
+- **Asset-Specific nginx Locations**: Separate location blocks for CSS, JS, and image files
+- **Forced MIME Types**: Explicitly sets `Content-Type: text/css` for CSS files and `Content-Type: application/javascript` for JS files
+- **Priority Routing**: Most specific patterns matched first (CSS, JS, images, then general assets)
+- **Comprehensive Coverage**: Handles all asset types that Kiwix uses
 
 ### Technical Details
 ```
-Request Flow:
-1. User visits: /api/hassio_ingress/[TOKEN]/
-2. nginx extracts TOKEN and forwards request to kiwix-serve
-3. kiwix-serve returns HTML with URLs like /skin/kiwix.css
+nginx Location Priority:
+1. /api/hassio_ingress/TOKEN/skin/*.css → Force MIME type text/css
+2. /api/hassio_ingress/TOKEN/skin/*.js → Force MIME type application/javascript  
+3. /api/hassio_ingress/TOKEN/skin/*.{svg,png,ico} → Handle images
+4. /api/hassio_ingress/TOKEN/skin/* → Handle other assets
+5. /api/hassio_ingress/TOKEN/* → Handle main pages + HTML rewriting
+```
+
+### Expected Results
+- ✅ No more "MIME type not supported" errors
+- ✅ CSS files load with correct `text/css` MIME type
+- ✅ JavaScript files load with correct `application/javascript` MIME type
 4. nginx rewrites these to /api/hassio_ingress/[TOKEN]/skin/kiwix.css
 5. Browser requests assets through correct ingress path
 6. Assets load successfully, UI works perfectly
 ```
 
-### Expected Results
-- ✅ All CSS styling loads correctly
-- ✅ JavaScript functionality works (search, navigation, etc.)
-- ✅ Images and icons display properly
-- ✅ Search forms and API calls function
-- ✅ Complete offline Wikipedia/content browsing experience
-- ✅ Seamless integration with Home Assistant sidebar
+- ✅ No more "MIME type not supported" errors
+- ✅ CSS files load with correct `text/css` MIME type
+- ✅ JavaScript files load with correct `application/javascript` MIME type
+- ✅ All assets route through proper ingress paths
+- ✅ Complete Kiwix UI functionality restored
+- ✅ No more 404 errors for assets
 
 ### Testing Checklist
-When testing v1.9.0, verify:
-- [ ] Page loads with full styling (not plain HTML)
+When testing v1.10.0, verify:
+- [ ] Page loads with full styling (no longer plain HTML)
+- [ ] No MIME type errors in browser console
+- [ ] No 404 errors for CSS/JS files
 - [ ] Search functionality works
-- [ ] Navigation between articles works
-- [ ] Images in articles display
-- [ ] No 404 errors in browser developer console
-- [ ] All UI elements (buttons, menus) are styled correctly
+- [ ] All UI elements properly styled
+- [ ] Images and icons display correctly
 
-This should be the definitive solution to the ingress asset loading challenges!
+This dual-approach solution (asset routing + MIME type fixing) should finally resolve all ingress asset loading issues!

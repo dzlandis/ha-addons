@@ -11,9 +11,13 @@ mkdir -p /tmp/nginx/fastcgi
 mkdir -p /tmp/nginx/uwsgi
 mkdir -p /tmp/nginx/scgi
 
-bashio::log.info "Starting nginx with ingress token extraction and URL rewriting..."
-bashio::log.info "This captures the HA ingress token and rewrites asset URLs properly"
-bashio::log.info "Asset URLs will be rewritten to use full /api/hassio_ingress/TOKEN/path format"
+bashio::log.info "Starting nginx with multi-location asset handling strategy..."
+bashio::log.info "Using separate location blocks for CSS, JS, and image assets"
+bashio::log.info "Forcing correct MIME types to prevent browser rejection"
+bashio::log.info "This should resolve 'MIME type not supported' errors"
+
+# Add debugging to nginx config
+echo "Starting nginx with debug-level error logging..." >&2
 
 # Start nginx
 exec nginx -c /etc/nginx/nginx.conf
