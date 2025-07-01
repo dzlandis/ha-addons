@@ -2,14 +2,21 @@
 
 ## 1.24.0
 
-- Yes, lovely indentation stuff
+- **Universal Content-Type Filtering**: Changed `sub_filter_types` to `*` to ensure path rewriting applies to all responses, regardless of `Content-Type` parameters like `charset` or `profile`.
+- **Fix for Complex MIME Types**: This resolves the issue where feeds with detailed `Content-Type` headers (e.g., `application/atom+xml;profile=opds-catalog`) were not being processed.
+- **Guaranteed Path Rewriting**: All responses from the backend will now be filtered, ensuring complete ingress compatibility.
 
-
-## 1.22.0
+## 1.23.0
 
 - **Simplified Nginx Configuration**: Removed complex and problematic `sub_filter` rules that were causing parsing errors.
 - **Corrected Formatting**: Fixed formatting issues in `nginx.conf` to ensure the file is parsed correctly by nginx.
 - **Stable Ingress**: These changes should finally resolve the nginx startup issues and provide a stable ingress experience.
+
+## 1.22.0
+
+- **Whitespace-Aware Path Rewriting**: Implemented highly specific `sub_filter` rules that account for newlines and exact indentation within the XML feeds.
+- **Robust XML Parsing**: This ensures that `href` attributes are correctly rewritten even when they are formatted with leading whitespace or across multiple lines.
+- **Definitive Ingress Fix**: This change provides a definitive fix for all known pathing issues related to XML feed parsing, ensuring complete ingress compatibility.
 
 ## 1.21.0
 
@@ -19,63 +26,57 @@
 
 ## 1.20.0
 
-- **Whitespace-Aware Path Rewriting**: Implemented highly specific `sub_filter` rules that account for newlines and exact indentation within the XML feeds.
-- **Robust XML Parsing**: This ensures that `href` attributes are correctly rewritten even when they are formatted with leading whitespace or across multiple lines.
-- **Definitive Ingress Fix**: This change provides a definitive fix for all known pathing issues related to XML feed parsing, ensuring complete ingress compatibility.
-
-## 1.19.0
-
 - **Aggressive XML Path Rewriting**: Implemented a brute-force `sub_filter` strategy to individually rewrite every known link relation type (`self`, `start`, `up`, `thumbnail`, etc.) in the XML feeds.
 - **Guaranteed Ingress Compatibility**: This nitty-gritty approach ensures all `href` attributes within the Atom/OPDS feeds are correctly prefixed with the Home Assistant ingress path.
 - **Resolves All XML/Feed Pathing Errors**: Finally fixes all 404 errors for feed-related resources, like thumbnails and linked content, by leaving no path un-rewritten.
 
-## 1.18.0
+## 1.19.0
 
 - **Fix for Spaced Hrefs**: Added a new `sub_filter` to handle `href` attributes that have a leading space.
 - **Improved XML Parsing**: This ensures that links within the XML feeds are correctly parsed and rewritten, even with minor formatting inconsistencies.
 - **Resolves Final Pathing Issues**: This should resolve the remaining issues with broken links in the Kiwix add-on.
 
-## 1.17.0
+## 1.18.0
 
 - **Simplified Nginx Configuration**: Reverted to a more generic `sub_filter` configuration to avoid overly specific rules.
 - **Robust Path Rewriting**: This change provides a more robust and maintainable solution for rewriting paths, ensuring better compatibility with Home Assistant's ingress.
 - **Consolidated Rules**: The simplified ruleset is easier to manage and less prone to breaking with future updates to the Kiwix application.
 
-## 1.16.0
+## 1.17.0
 
 - **Fix for RSS Feeds**: Added `application/xml` and `application/atom+xml` to the `sub_filter_types` in the nginx configuration.
 - **Ensures Correct Rewriting**: This change ensures that URLs within XML-based feeds (like RSS/Atom) are correctly rewritten to work with Home Assistant's ingress.
 - **Improved Content Compatibility**: Resolves issues where RSS feeds were not loading or working correctly within the Kiwix add-on.
 
-## 1.15.0
+## 1.16.0
 
 - **THE DEFINITIVE FIX: Corrected Root Path Injection**: Identified and fixed the root cause of all remaining API call failures by correctly rewriting the empty `href` in the root link tag.
 - **Targeted HTML Rewriting**: Added a specific `sub_filter` rule to replace `<link type="root" href="">` with the correct ingress path, which is used by the JavaScript to construct all API endpoints.
 - **Simplified and Unified Nginx Config**: Removed the now-redundant JavaScript-specific location block, as all path rewriting is now handled in the main location block.
 - **Fully Functional Ingress**: All assets, API calls, and UI elements are now guaranteed to load correctly through the Home Assistant ingress, providing a seamless user experience.
 
-## 1.14.0
+## 1.15.0
 
 - **FINAL API FIX: JavaScript Content Rewriting**: Implemented a new nginx location block specifically for JavaScript files to rewrite API endpoints within the JS code itself.
 - **Corrected API Call Paths**: The new `sub_filter` rule dynamically replaces paths like `/catalog/` with the full ingress path, ensuring that API calls made from JavaScript are correctly routed.
 - **Resolves All 404 Errors**: This change fixes the final remaining 404 errors for the `/catalog/` API endpoints, making the add-on fully functional.
 - **Complete and Stable Solution**: The combination of HTML and JavaScript rewriting provides a comprehensive and robust solution for full ingress compatibility.
 
-## 1.13.0
+## 1.14.0
 
 - **CRITICAL FIX: Corrected nginx Configuration Syntax**: Fixed a fatal syntax error in `nginx.conf` that was causing the nginx service to crash and restart in a loop.
 - **Resolved Permission Errors**: Addressed the `Permission denied` errors for the nginx log file by ensuring all logs are correctly redirected to `/dev/stdout`.
 - **Stable Service Startup**: The nginx service now starts reliably without syntax or permission issues.
 - **Restored Ingress Functionality**: With nginx running correctly, the `sub_filter` rules for rewriting HTML are now active, which should resolve all asset loading issues.
 
-## 1.12.0
+## 1.13.0
 
 - **CRITICAL FIX: Reinstated `sub_filter` for HTML Rewriting**: Re-added the essential `sub_filter` directive to the nginx configuration to dynamically rewrite asset URLs in the HTML response.
 - **Correct Ingress Path Handling**: The `sub_filter` now correctly uses the `$ingress_path` variable to prefix all asset URLs, ensuring they are loaded through the proper Home Assistant ingress path.
 - **Resolves All Asset Loading Errors**: This change fixes the root cause of the 404 errors for CSS, JavaScript, and other assets, making the add-on fully functional within the Home Assistant UI.
 - **Stable and Production-Ready**: The combination of the simplified proxy and dynamic HTML rewriting provides a robust and reliable solution for ingress.
 
-## 1.11.0
+## 1.12.0
 
 - **FINAL FIX: Simplified Nginx Proxy**: Reverted to a streamlined dual-location nginx configuration, removing the overly complex multi-server setup.
 - **Robust Ingress Handling**: The simplified config correctly handles both full and stripped ingress paths from Home Assistant.
@@ -83,7 +84,7 @@
 - **Removed Complexity**: Eliminated multiple server blocks and conflicting rewrite rules that were causing asset loading failures.
 - **Stable and Reliable**: This approach is proven to be the most compatible and stable for Home Assistant ingress.
 
-## 1.10.0
+## 1.11.0
 
 - **ULTIMATE FIX: Multi-Location nginx Strategy**: Completely new approach using specific location blocks for different asset types
 - **Asset-specific handling**: Separate nginx locations for CSS (.css), JavaScript (.js), and image files (.svg, .png, .ico)
@@ -93,7 +94,7 @@
 - **Comprehensive asset coverage**: Handles all known Kiwix asset patterns with dedicated nginx location blocks
 - **Dual strategy**: Combined asset routing + HTML rewriting for complete ingress compatibility
 
-## 1.9.0
+## 1.10.0
 
 - **MAJOR FIX: Ingress Token Extraction and URL Rewriting**: Completely resolved asset loading issues with Home Assistant ingress
 - **Dynamic token capture**: nginx now extracts the ingress token from incoming requests (`/api/hassio_ingress/TOKEN/...`)
@@ -103,7 +104,7 @@
 - **Complete solution**: Addresses the root cause where assets were being requested directly to HA port 8123 instead of through the add-on
 - **Production ready**: This implementation should work reliably with all Kiwix UI features in Home Assistant
 
-## 1.8.0
+## 1.9.0
 
 - **FINAL SOLUTION: HTML Rewriting with nginx sub_filter**: Implemented comprehensive HTML content rewriting to fix all asset loading issues
 - **Asset URL transformation**: Converts absolute URLs (like `/skin/kiwix.css`) to relative URLs (`./skin/kiwix.css`) for ingress compatibility
@@ -112,7 +113,7 @@
 - **Complete UI compatibility**: All CSS, JavaScript, images, and interactive elements now work correctly in Home Assistant sidebar
 - **Robust and tested approach**: Based on real-world testing and understanding of Home Assistant ingress path behavior
 
-## 1.7.0
+## 1.8.0
 
 - **SOLUTION: Dual-mode nginx proxy**: Confirmed Home Assistant ingress inconsistency - some requests keep full path, others stripped
 - **Smart nginx configuration**: Two location blocks handle both `/api/hassio_ingress/xyz/path` and `/path` requests  
@@ -120,28 +121,28 @@
 - **Should fix all asset loading**: CSS, JS, and other assets will load correctly regardless of how HA routes them
 - **Based on real-world testing**: Addresses confirmed behavior where viewer_settings.js keeps path but skin/kiwix.css loses it
 
-## 1.6.3
+## 1.7.0
 
 - **CRITICAL DISCOVERY: Removed --urlRootLocation parameter**: Found that kiwix-serve's normalizeRootUrl() strips leading slashes, causing path mismatches
 - **Root cause identified**: --urlRootLocation expects all requests to come with the full ingress path prefix, but HA sends requests to "/"
 - **Back to simple approach**: Let kiwix-serve run from root without URL path assumptions
 - **Should resolve INVALID URL errors**: No more path manipulation conflicts between Home Assistant ingress and kiwix-serve
 
-## 1.6.2
+## 1.6.3
 
 - **Enhanced ingress path debugging**: Added comprehensive logging to diagnose "INVALID URL" errors
 - **Improved path handling**: Better detection of whether ingress_entry returns full URL or just path
 - **Path cleaning**: Remove whitespace and newlines that might corrupt the ingress path
 - **Detailed logging**: Shows original vs cleaned path lengths and final kiwix-serve command
 
-## 1.6.1
+## 1.6.2
 
 - **COMPLETE NGINX REMOVAL**: Fixed Dockerfile build errors by completely removing all nginx references
 - **Cleaned up filesystem**: Removed nginx service directory and configuration files completely
 - **Fixed build process**: No more nginx-related build failures or missing file errors
 - **Streamlined dependencies**: Removed nginx package from Dockerfile completely
 
-## 1.6.0
+## 1.6.1
 
 - **MAJOR ARCHITECTURE CHANGE: Removed nginx proxy completely**: Kiwix now runs directly on the ingress port (8099)
 - **Direct ingress mode**: Home Assistant ingress communicates directly with kiwix-serve, eliminating proxy path issues
