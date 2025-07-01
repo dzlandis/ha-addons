@@ -1,5 +1,12 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.15.0
+
+- **THE DEFINITIVE FIX: Corrected Root Path Injection**: Identified and fixed the root cause of all remaining API call failures by correctly rewriting the empty `href` in the root link tag.
+- **Targeted HTML Rewriting**: Added a specific `sub_filter` rule to replace `<link type="root" href="">` with the correct ingress path, which is used by the JavaScript to construct all API endpoints.
+- **Simplified and Unified Nginx Config**: Removed the now-redundant JavaScript-specific location block, as all path rewriting is now handled in the main location block.
+- **Fully Functional Ingress**: All assets, API calls, and UI elements are now guaranteed to load correctly through the Home Assistant ingress, providing a seamless user experience.
+
 ## 1.14.0
 
 - **FINAL API FIX: JavaScript Content Rewriting**: Implemented a new nginx location block specifically for JavaScript files to rewrite API endpoints within the JS code itself.
