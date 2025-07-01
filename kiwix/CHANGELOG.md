@@ -1,5 +1,10 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.24.0
+
+- Yes, lovely indentation stuff
+
+
 ## 1.22.0
 
 - **Simplified Nginx Configuration**: Removed complex and problematic `sub_filter` rules that were causing parsing errors.
