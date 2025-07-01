@@ -13,16 +13,6 @@ mkdir -p /tmp/nginx/client_body \
          /tmp/nginx/scgi \
          /run/nginx
 
-# Replace ingress entry placeholder
-INGRESS_ENTRY=$(bashio::addon.ingress_entry)
-bashio::log.info "Ingress entry: ${INGRESS_ENTRY}"
-
-# Escape special regex characters in the ingress entry
-ESCAPED_INGRESS=$(echo "${INGRESS_ENTRY}" | sed 's/[[\.*^$()+?{|]/\\&/g')
-bashio::log.info "Escaped ingress entry: ${ESCAPED_INGRESS}"
-
-sed -i "s|%%ingress_entry%%|${ESCAPED_INGRESS}|g" /etc/nginx/nginx.conf
-
 # Wait for Kiwix to be available
 while ! nc -z 127.0.0.1 8090; do
     bashio::log.info "Waiting for Kiwix to start..."

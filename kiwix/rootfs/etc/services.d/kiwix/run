@@ -113,11 +113,12 @@ else
         exit 1
     fi
     
-    # Build command arguments - nginx will handle ingress path translation
+    # Build command arguments - configure kiwix for ingress path
     args=(
         "--port=${port}"
         "--address=0.0.0.0"
         "--threads=${threads}"
+        "--urlRootLocation=$(bashio::addon.ingress_entry)"
     )
     
     # Add optional arguments

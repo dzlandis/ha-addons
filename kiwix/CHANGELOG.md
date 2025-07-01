@@ -1,5 +1,13 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.5.0
+
+- **MAJOR APPROACH CHANGE: Configure kiwix-serve for ingress**: Added `--urlRootLocation` parameter to kiwix-serve itself
+- **Simplified nginx to basic proxy**: Removed all complex path rewriting and location matching from nginx
+- **Let kiwix handle ingress paths**: kiwix-serve now generates all URLs with correct ingress path prefix
+- **Cleaner architecture**: nginx just proxies, kiwix-serve handles all URL generation and asset paths
+- **Should fix all 404 asset errors**: kiwix-serve will generate correct URLs for all assets from the start
+
 ## 1.4.2
 
 - **Fixed nginx service restart loop**: Removed problematic debug grep command that was failing and causing service restarts
