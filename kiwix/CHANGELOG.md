@@ -1,5 +1,12 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.3.8
+
+- **Fixed ingress path rewriting**: Switched from complex regex location matching to simple rewrite rules
+- **Simplified nginx configuration**: Using reliable `rewrite` directive instead of problematic location regex with variables
+- **Eliminated 404 errors**: All assets should now properly load by correctly stripping ingress path prefix
+- **Improved reliability**: Back to proven nginx rewrite approach that works consistently
+
 ## 1.3.7
 
 - **Fixed nginx configuration error**: Removed problematic `proxy_redirect default` directive that conflicts with variables in `proxy_pass`
