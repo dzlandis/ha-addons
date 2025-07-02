@@ -1,9 +1,18 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.26.0
+
+- Chore: Bump version to 1.26.0 for release
+
 ## 1.25.0
 
+- Feat: Add sub_filter rules for JS-generated paths
 - **Ingress Compatibility for Relative Paths**: Enhanced handling of relative paths in CSS and JavaScript files when served through Home Assistant ingress.
 - **Improved Asset Loading**: This change ensures that all assets, regardless of their path format, are correctly loaded in the Home Assistant environment.
+
+## 1.24.1
+
+- Feat: Add sub_filter rules for JS-generated paths
 
 ## 1.24.0
 
