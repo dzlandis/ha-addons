@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.48.0
+
+- Fix: Target the exact setIframeUrl() function with specific contentIframe.contentWindow.location.replace(path) pattern
+- Fix: Remove overly broad .replace() rule that was breaking JavaScript functions
+- Fix: Remove duplicate sub_filter rule
+
 ## 1.47.0
 
 - Fix: Add comprehensive iframe location.replace() and content URL rewriting rules
