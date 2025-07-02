@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.32.0
+
+- Fix: Add additional sub_filter rules to handle JavaScript URL constructions with absolute paths
+
 ## 1.31.0
 
 - Fix: Replace getRootLocation() function result with ingress path to fix JavaScript URL generation
