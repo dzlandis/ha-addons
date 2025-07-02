@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.34.0
+
+- Fix: Add specific sub_filter rules for autocomplete URL constructions and gotoUrl function
+
 ## 1.33.0
 
 - Fix: Repair nginx config syntax error caused by misplaced sub_filter rules
