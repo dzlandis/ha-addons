@@ -1,5 +1,10 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.40.0
+
+- Fix: Add CSP and X-Frame-Options headers to allow iframe embedding and fix cross-origin issues
+- Fix: Set proper Host header and fix window.location.host references to use correct hostname
+
 ## 1.39.0
 
 - Fix: Add sub_filter rules to rewrite port references from 8099 to 8123 in JavaScript and URLs to fix iframe content loading through Home Assistant ingress
