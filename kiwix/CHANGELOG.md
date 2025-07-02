@@ -1,5 +1,13 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.57.0
+
+- Fix: CRITICAL - Fixed doubled ingress paths in redirects
+- Fix: Updated proxy_redirect rules to properly detect existing ingress paths
+- Fix: Added negative lookahead patterns to prevent rewriting URLs that already contain ingress path
+- Fix: Separated handling of URLs with and without existing ingress paths
+- Improvement: More robust redirect handling for all edge cases
+
 ## 1.55.0
 
 - Fix: CRITICAL - Fixed completely corrupted nginx.conf file structure
