@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.37.0
+
+- Fix: Add proxy_redirect rule to handle kiwix-serve 302 redirects with correct ingress path
+
 ## 1.36.0
 
 - Fix: Remove additional problematic sub_filter rules causing nginx syntax errors
