@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.33.0
+
+- Fix: Repair nginx config syntax error caused by misplaced sub_filter rules
+
 ## 1.32.0
 
 - Fix: Add additional sub_filter rules to handle JavaScript URL constructions with absolute paths
