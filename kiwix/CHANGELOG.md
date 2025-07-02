@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.47.0
+
+- Fix: Add comprehensive iframe location.replace() and content URL rewriting rules
+- Fix: Target specific failing /content/ path patterns that were causing redirects
+- Fix: Add broader location.replace() patterns to catch all iframe navigation attempts
+
 ## 1.46.0
 
 - Fix: Remove problematic sub_filter rules with ${} syntax that cause nginx errors
