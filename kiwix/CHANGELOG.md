@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.39.0
+
+- Fix: Add sub_filter rules to rewrite port references from 8099 to 8123 in JavaScript and URLs to fix iframe content loading through Home Assistant ingress
+
 ## 1.38.0
 
 - Fix: Add sub_filter rule to fix blankPageUrl variable for proper iframe loading
