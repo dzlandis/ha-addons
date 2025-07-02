@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.31.0
+
+- Fix: Replace getRootLocation() function result with ingress path to fix JavaScript URL generation
+
 ## 1.30.0
 
 - Fix: Remove problematic JavaScript template literal sub_filter rules that were causing nginx syntax errors
