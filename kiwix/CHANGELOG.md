@@ -1,5 +1,21 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.52.0
+
+- Fix: Removed problematic template literal sub_filter rules that contained ${} patterns
+- Fix: Replaced complex JavaScript regex patterns with simpler string replacements
+- Fix: Avoided nginx variable parsing issues by using safer sub_filter patterns
+- Fix: Focused on simpler root + "/path" patterns instead of template literals
+
+## 1.51.0- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
+
+## 1.51.0
+
+- Fix: Enhanced JavaScript URL rewriting to handle template literals and complex iframe location.replace() calls
+- Fix: Added specific proxy_redirect rule to catch redirects that already have ingress path but wrong port
+- Fix: Improved handling of userUrl2IframeUrl function return values with template literals
+- Fix: More comprehensive redirect pattern matching for kiwix-serve's internal redirects
+
 ## 1.50.0
 
 - Fix: Make nginx listen on both ports 8099 and 8123 to catch redirects from kiwix-serve
