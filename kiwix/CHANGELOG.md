@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.36.0
+
+- Fix: Remove additional problematic sub_filter rules causing nginx syntax errors
+
 ## 1.35.0
 
 - Fix: Remove problematic sub_filter rule that was causing nginx syntax errors
