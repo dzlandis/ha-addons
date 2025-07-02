@@ -1,5 +1,27 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.46.0
+
+- Fix: Remove problematic sub_filter rules with ${} syntax that cause nginx errors
+- Fix: Simplify approach to rely on root variable rewriting instead of template literal patterns
+
+## 1.45.0
+
+- Fix: Add specific sub_filter rules to target the exact JavaScript patterns that construct iframe URLs
+- Fix: Target setIframeUrl(), gotoUrl(), and userUrl2IframeUrl() functions specifically
+- Fix: Handle template literal URL construction with ${root}/content/ and ${root}/search patterns
+
+## 1.44.0
+
+- Fix: Add critical sub_filter rules to rewrite iframe src URLs that point to localhost:8099 or homeassistant.local:8099
+- Fix: Target the specific iframe CSP issue that prevents content loading
+
+## 1.43.0
+
+- Fix: Remove all access restrictions to allow iframe content loading
+- Fix: Remove all CSP and frame-option headers completely
+- Fix: Add additional sub_filter rules for iframe-specific URL patterns and localhost referencestps://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
+
 ## 1.43.0
 
 - Fix: Remove all access restrictions to allow iframe content loading
