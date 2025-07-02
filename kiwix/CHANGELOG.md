@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.50.0
+
+- Fix: Make nginx listen on both ports 8099 and 8123 to catch redirects from kiwix-serve
+- Fix: Since kiwix-serve hardcodes redirects to port 8099, we now intercept those at the nginx level
+- Fix: This should prevent the CSP errors when kiwix-serve redirects to port 8099 in iframe content
+
 ## 1.49.0
 
 - Fix: Comprehensive redirect handling - reorder proxy headers to influence upstream behavior
