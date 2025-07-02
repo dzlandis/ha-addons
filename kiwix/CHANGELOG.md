@@ -1,5 +1,14 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.58.0
+
+- Major: Complete rewrite of nginx proxy approach
+- Fix: Strip ingress path before forwarding to kiwix-serve, then add it back in responses
+- Fix: Let kiwix-serve handle clean URLs internally to avoid path confusion
+- Improvement: Much simpler and more reliable URL rewriting logic
+- Fix: Proper handling of redirects without complex regex patterns
+- Improvement: Cleaner separation between backend and frontend URL handling
+
 ## 1.57.0
 
 - Fix: CRITICAL - Fixed doubled ingress paths in redirects
