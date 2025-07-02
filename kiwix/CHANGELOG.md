@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.29.0
+
+- Fix: Properly escape dollar signs in nginx sub_filter rules for JavaScript template literals
+
 ## 1.28.0
 
 - Fix: Another attempt to fix nginx sub_filter rules
