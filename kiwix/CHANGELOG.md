@@ -1,5 +1,12 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.59.0
+
+- Fix: CRITICAL - Fixed redirect port from 8099 to 8123 for browser accessibility
+- Fix: Browser always accesses Home Assistant via port 8123, not internal ingress port 8099
+- Fix: Redirects now properly point to the correct frontend port that browser can access
+- Improvement: Corrected understanding of Home Assistant ingress port architecture
+
 ## 1.58.0
 
 - Major: Complete rewrite of nginx proxy approach
