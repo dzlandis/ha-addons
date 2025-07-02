@@ -1,5 +1,10 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.41.0
+
+- Fix: Allow localhost connections to fix iframe content loading while maintaining security through Home Assistant ingress
+- Fix: Remove duplicate Host header setting that was causing conflicts
+
 ## 1.40.0
 
 - Fix: Add CSP and X-Frame-Options headers to allow iframe embedding and fix cross-origin issues
