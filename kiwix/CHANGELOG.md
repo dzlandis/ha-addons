@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.42.0
+
+- Fix: Completely remove CSP and X-Frame-Options headers to allow iframe content loading
+- Fix: Remove complex port/hostname rewriting that was causing conflicts
+- Fix: Simplify configuration to focus on basic path rewriting only
+
 ## 1.41.0
 
 - Fix: Allow localhost connections to fix iframe content loading while maintaining security through Home Assistant ingress
