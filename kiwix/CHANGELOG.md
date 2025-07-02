@@ -1,5 +1,13 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.53.0
+
+- Fix: NUCLEAR APPROACH - Catch ALL redirect patterns from kiwix-serve with wildcard matching
+- Fix: Replace ANY occurrence of port 8099 with 8123 in all content
+- Fix: Added comprehensive proxy headers to force kiwix-serve to use port 8123
+- Fix: Last resort redirect rule to catch anything that slips through
+- Fix: This should finally stop the port 8099 redirects that cause CSP errors
+
 ## 1.52.0
 
 - Fix: Removed problematic template literal sub_filter rules that contained ${} patterns
