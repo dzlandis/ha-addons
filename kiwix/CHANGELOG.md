@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.38.0
+
+- Fix: Add sub_filter rule to fix blankPageUrl variable for proper iframe loading
+
 ## 1.37.0
 
 - Fix: Add proxy_redirect rule to handle kiwix-serve 302 redirects with correct ingress path
