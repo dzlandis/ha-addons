@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.28.0
+
+- Fix: Another attempt to fix nginx sub_filter rules
+
 ## 1.27.0
 
 - Fix: Correctly escape characters in nginx sub_filter rules
