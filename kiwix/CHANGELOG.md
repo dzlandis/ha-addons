@@ -1,5 +1,13 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.49.0
+
+- Fix: Comprehensive redirect handling - reorder proxy headers to influence upstream behavior
+- Fix: Added X-Forwarded-Host and X-Forwarded-Port headers to prevent kiwix-serve from using port 8099
+- Fix: Enhanced proxy_redirect rules to catch all port 8099/8090 redirect patterns  
+- Fix: Added additional sub_filter rules to catch any remaining port 8099 references
+- Fix: Fixed proxy header order to ensure upstream receives correct host information before generating redirects
+
 ## 1.48.0
 
 - Fix: Target the exact setIframeUrl() function with specific contentIframe.contentWindow.location.replace(path) pattern
