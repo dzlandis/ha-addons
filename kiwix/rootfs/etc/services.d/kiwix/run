@@ -24,7 +24,7 @@ no_library_button=$(bashio::config 'no_library_button')
 
 # Set defaults
 library_path=${library_path:-"/share/kiwix"}
-port=8090  # Internal port - nginx will proxy from 8099 to 8090
+port=8090  # Run kiwix-serve on port 8090, nginx proxies from 8099
 log_level=${log_level:-"info"}
 threads=${threads:-4}
 search_limit=${search_limit:-0}

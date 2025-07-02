@@ -1,5 +1,22 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.55.0
+
+- Fix: CRITICAL - Fixed completely corrupted nginx.conf file structure
+- Fix: Restored proper nginx configuration syntax and file organization
+- Fix: Corrected proxy_pass to use port 8090 (where kiwix-serve runs)
+- Fix: Fixed all proxy headers to use port 8099 (correct ingress port)
+- Fix: Ensured all closing braces and configuration blocks are properly structured
+
+## 1.54.0
+
+- Fix: CORRECT APPROACH - Researched Home Assistant ingress documentation
+- Fix: Port 8099 is the correct ingress port (ingress_port: 8099 in config.yaml)
+- Fix: Changed proxy headers to use port 8099 (not 8123) since that's what HA expects
+- Fix: Fixed proxy_redirect rules to redirect TO port 8099 with ingress path
+- Fix: Removed incorrect port rewriting sub_filters (8099 is correct, not 8123)
+- Fix: Now when kiwix-serve redirects to port 8099, it will include the proper ingress path
+
 ## 1.53.0
 
 - Fix: NUCLEAR APPROACH - Catch ALL redirect patterns from kiwix-serve with wildcard matching
