@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.43.0
+
+- Fix: Remove all access restrictions to allow iframe content loading
+- Fix: Remove all CSP and frame-option headers completely
+- Fix: Add additional sub_filter rules for iframe-specific URL patterns and localhost references
+
 ## 1.42.0
 
 - Fix: Completely remove CSP and X-Frame-Options headers to allow iframe content loading
