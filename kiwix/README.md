@@ -16,7 +16,6 @@ Kiwix is a free and open-source offline content reader that allows you to access
 
 - 🌐 Offline access to Wikipedia and other educational content
 - 📚 Support for ZIM files (compressed content format)
-- 🏠 **Integrated with Home Assistant sidebar** for easy access
 - 🔧 Easy configuration through Home Assistant UI
 - 📁 Flexible library path configuration
 - 🌍 Multi-language content support
@@ -40,9 +39,7 @@ Kiwix is a free and open-source offline content reader that allows you to access
 2. **Download ZIM files** from [library.kiwix.org](https://library.kiwix.org/)
 3. **Copy ZIM files** to your configured library path (default: `/share/kiwix/`)
 4. **Start the add-on**
-5. **Access content**:
-   - **Via Home Assistant sidebar**: Click "Kiwix" in the sidebar (recommended)
-   - **Direct access**: Visit `http://homeassistant.local:8080`
+5. **Access content**: Visit `http://homeassistant.local:8080` (or your Home Assistant IP with port 8080)
 
 ### Popular ZIM files to try:
 - **Wikipedia** (available in many languages)

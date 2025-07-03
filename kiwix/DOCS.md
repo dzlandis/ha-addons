@@ -2,16 +2,14 @@
 
 ## How to use
 
-This add-on provides an offline content reader for educational materials like Wikipedia, accessible through ZIM files. **The add-on integrates seamlessly with Home Assistant and appears in the sidebar for easy access.**
+This add-on provides an offline content reader for educational materials like Wikipedia, accessible through ZIM files.
 
 ### Getting Started
 
 1. **Download ZIM files**: Visit [library.kiwix.org](https://library.kiwix.org/) to download content
 2. **Upload files**: Place your ZIM files in the configured library path (default: `/share/kiwix/`)
 3. **Start the add-on**: The service will automatically detect and serve your content
-4. **Access content**: 
-   - **Via sidebar**: Click "Kiwix" in the Home Assistant sidebar (recommended)
-   - **Direct access**: Open `http://homeassistant.local:8080` in your browser
+4. **Access content**: Open `http://homeassistant.local:8080` in your browser (replace with your Home Assistant IP if different)
 
 ### Configuration Options
 
@@ -90,16 +88,6 @@ kiwix-helper check
 kiwix-helper help
 ```
 
-### Sidebar Integration
-
-The Kiwix add-on integrates seamlessly with Home Assistant through the ingress feature. Once the add-on is running, you'll see a "Kiwix" entry in your Home Assistant sidebar. This provides:
-
-- **Easy access**: No need to remember ports or URLs
-- **Seamless integration**: Works with Home Assistant authentication
-- **Consistent experience**: Matches the look and feel of other Home Assistant interfaces
-
-The sidebar entry uses a book icon (📖) and is accessible to all users (not just administrators).
-
 ### Troubleshooting
 
 **No content visible?**
@@ -109,16 +97,11 @@ The sidebar entry uses a book icon (📖) and is accessible to all users (not ju
 - Restart the add-on after adding new files
 
 **Cannot access the web interface?**
-- **Sidebar integration**: Look for "Kiwix" in your Home Assistant sidebar
-- Verify the port is not blocked by firewall (for direct access)
-- Check if another service is using the same port
+- Verify the add-on is running and started successfully
+- Check that port 8080 is not blocked by firewall
+- Ensure no other service is using port 8080
+- Try accessing via `http://[HOME_ASSISTANT_IP]:8080`
 - Review add-on logs for error messages
-
-**Interface looks broken in sidebar?**
-- This usually indicates CSS/JS loading issues in ingress mode
-- Check the add-on logs for "URL root location" messages
-- Try restarting the add-on
-- If issues persist, try accessing via direct URL first, then sidebar
 
 **Add-on won't start?**
 - Check configuration syntax

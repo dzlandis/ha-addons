@@ -122,27 +122,6 @@ else
         "--threads=${threads}"
     )
     
-    # Debug: Log environment variables that might help with ingress
-    bashio::log.info "Environment variables for ingress debugging:"
-    bashio::log.info "SUPERVISOR_TOKEN: ${SUPERVISOR_TOKEN:-'not set'}"
-    bashio::log.info "HASSIO_TOKEN: ${HASSIO_TOKEN:-'not set'}"
-    env | grep -i ingress || bashio::log.info "No ingress-related env vars found"
-    
-    # Set URL root location for ingress compatibility
-    # This ensures CSS, JS, and other assets load correctly when accessed via Home Assistant sidebar
-    bashio::log.info "Configuring for ingress compatibility"
-    # Use bashio function to get the correct ingress entry
-    ingress_entry="/"
-    if bashio::addon.ingress_entry 2>/dev/null; then
-        ingress_entry=$(bashio::addon.ingress_entry)
-        bashio::log.info "Got ingress entry from bashio: ${ingress_entry}"
-    else
-        bashio::log.info "Could not get ingress entry from bashio, using default: ${ingress_entry}"
-    fi
-    
-    args+=("--urlRootLocation=${ingress_entry}")
-    bashio::log.info "URL root location set to: ${ingress_entry}"
-    
     # Add optional arguments
     if [ "${search_limit}" -gt 0 ]; then
         args+=("--searchLimit=${search_limit}")

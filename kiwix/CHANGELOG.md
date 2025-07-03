@@ -1,5 +1,11 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.3.0
+
+- **Removed ingress support**: Add-on no longer supports Home Assistant sidebar integration
+- Removed ingress-related configuration and code for external access only
+- Add-on is now accessible only via direct URL (e.g., http://homeassistant.local:8080)
+
 ## 1.2.0
 
 - **Fixed ingress compatibility**: Resolved CSS/JS loading issues when accessing via Home Assistant sidebar
