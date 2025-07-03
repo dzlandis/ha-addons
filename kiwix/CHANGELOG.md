@@ -1,5 +1,9 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.3.1
+
+- Updated addon icon and logo
+
 ## 1.3.0
 
 - **Removed ingress support**: Add-on no longer supports Home Assistant sidebar integration
