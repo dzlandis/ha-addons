@@ -1,5 +1,14 @@
 <!-- https://developers.home-assistant.io/docs/add-ons/presentation#keeping-a-changelog -->
 
+## 1.60.0
+
+- Major: Complete rewrite using proven Portainer add-on pattern  
+- Improvement: Removed all Portainer-specific elements, kept only Kiwix essentials
+- Fix: Simplified nginx configuration using templates and tempio (like other HA add-ons)
+- Fix: Proper ingress port handling without exposing ports in Dockerfile
+- Fix: Clean separation of template generation and content rewriting
+- Improvement: More maintainable and standard Home Assistant add-on architecture
+
 ## 1.59.0
 
 - Fix: CRITICAL - Fixed redirect port from 8099 to 8123 for browser accessibility

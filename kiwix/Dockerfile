@@ -10,7 +10,10 @@ RUN \
         curl \
         wget \
         nginx \
-    && rm -rf /var/cache/apk/*
+    && rm -rf /var/cache/apk/* \
+    # Install tempio for nginx templating (following Portainer pattern)
+    && curl -L -s "https://github.com/home-assistant/tempio/releases/download/2021.09.0/tempio_$(apk --print-arch).tar.gz" \
+    | tar -zxf - -C /usr/bin tempio
 
 # Copy kiwix-serve from official multi-architecture Kiwix image
 COPY --from=ghcr.io/kiwix/kiwix-serve:latest /usr/local/bin/kiwix-serve /usr/local/bin/kiwix-serve
@@ -32,5 +35,4 @@ RUN chmod a+x /etc/services.d/kiwix/run \
 # Create directory for ZIM files
 RUN mkdir -p /data/zim
 
-# Expose port
-EXPOSE 8099
+# Don't expose any ports - Home Assistant handles ingress routing
